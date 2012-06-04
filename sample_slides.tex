@@ -1,0 +1,167 @@
+% =============================================================================
+% File:  sample_slides.tex --  Example of the use of the Falkor Beamer theme
+% Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
+% Time-stamp: <Mon 2012-06-04 16:00 svarrette>
+% 
+% Copyright (c) 2012 Sebastien Varrette <Sebastien.Varrette@uni.lu>
+% .             http://varrette.gforge.uni.lu
+% 
+% For more information:
+% - LaTeX: http://www.latex-project.org/
+% - Beamer: https://bitbucket.org/rivanvx/beamer/
+% =============================================================================
+\documentclass{beamer}
+% \documentclass[draft]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style configuration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+\usepackage{ae,url}
+\usepackage{epsfig}
+\usepackage{textcomp}
+% \usepackage{graphicx}
+\usepackage{amsmath, amsthm}
+\usepackage{amsfonts,amssymb}
+\usepackage{float}
+\usepackage{floatflt}         % floating figures
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage[official]{eurosym} % Euro symbol
+
+\usepackage{colortbl}
+\graphicspath{{images/}} % Add this directory to the searched paths for graphics
+
+\bibliographystyle{acm}
+
+% Listing stuff
+\newenvironment{cmdline}
+{\vspace{-0.5em}\begin{flushleft}\begin{scriptsize}}
+        {\end{scriptsize}\end{flushleft}\vspace{-0.5em}}
+
+\newcommand{\promptline}[2]{~~~~\textcolor{progressbar@fgblue}{\texttt{{\tiny #1\textnormal{\$>}}}} \texttt{#2}}
+\newcommand{\cmdlineentry}[1]{\promptline{}{#1}}
+\newcommand{\cmdlinefrontend}[1]{\promptline{(frontend)}{#1}}
+\newcommand{\cmdlinenode}[1]{\promptline{(node)}{#1}}
+\newcommand{\cmdlinecomment}[1]{\hfill{\tiny \textcolor{red}{\textit{\# #1}}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Beamer Specific options
+%%%%%%%%%%%%%% 
+\definecolor{lightgray}{gray}{0.95}
+\definecolor{trustcolor}{rgb}{0.1,0.3,0.7}
+\definecolor{secplan}{rgb}{0.2,0.2,0.7}
+\definecolor{beamerblue}{rgb}{0.2,0.2,0.7}
+
+\hypersetup{
+  colorlinks,%
+  citecolor=beamerblue,%
+  linkcolor=beamerblue,%
+  urlcolor=beamerblue
+}
+
+
+
+% The key part to use my theme
+\usetheme{Falkor}
+
+% format the beginning of each new section
+\AtBeginSection[]
+{
+  \frame{
+    \frametitle{Summary}
+    {\scriptsize\tableofcontents[currentsection]}
+  }
+}
+
+
+\renewcommand{\epsilon}{\varepsilon}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{The \texttt{Falkor} \LaTeX Beamer Style}
+\subtitle{Overview and Usage}
+
+\author{S\'ebastien Varrette}
+\institute[CSC research unit]{
+  Computer Science and Communications (CSC) Research Unit,
+  University of Luxembourg, Luxembourg
+}
+
+\pgfdeclareimage[height=0.8cm]{logo}{Images/logo_UL.pdf}
+\logo{\pgfuseimage{logo}}
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frame}
+    \vspace{2.5em}
+    \titlepage
+\end{frame}
+
+
+\section{Usage}
+\frame{
+  \frametitle{Sample usage}
+
+  \begin{itemize}
+    \item Get the latest version on
+      \href{https://github.com/Falkor/beamerthemeFalkor}{Github}
+    \item Copy the structure of this repository into your working
+      directory as follows:
+      \begin{cmdline}
+          \cmdlineentry{rsync -avzu --exclude "*.git" $\backslash$\\ ~~~~~/path/to/github/cloned/beamerthemeFalkor /path/to/working/dir}
+      \end{cmdline}
+
+    \item Copy and adapt the sample document \texttt{sample\_slides.tex}
+      \begin{itemize}
+        \item[$\hookrightarrow$] run \texttt{make} to generate \texttt{sample\_slides.pdf}
+      \end{itemize}
+    \item Change the slides images to whatever you want by adapting the symbolic link
+      \texttt{images/slide\_image.jpg}:
+      \begin{cmdline}
+          \cmdlineentry{cd images}\\
+          \cmdlineentry{wget http://path/to/myimage.jpg}\\
+          \cmdlineentry{ln -sf myimage.jpg slide\_image.jpg}\\
+      \end{cmdline}
+
+  \end{itemize}
+}
+
+
+\section{Conclusion}
+
+% ............
+\begin{frame}
+    \frametitle{Conclusion}
+
+
+\end{frame}
+
+
+
+
+\frame{
+  \begin{center}
+      Thank you for your attention...
+      \vspace{1cm}
+
+      {\Large Questions?}
+
+      \includegraphics[scale=0.2]{question.jpg}
+  \end{center}
+}
+
+
+\end{document}
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+% 
+% Local Variables:
+% mode: latex
+% mode: flyspell
+% mode: auto-fill
+% fill-column: 80
+% End:
