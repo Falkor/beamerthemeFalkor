@@ -17,7 +17,7 @@ To use this theme:
          % Beamer specific style
          \usetheme{Falkor}
 
-* adapt (or create) the symbolic link `slide_image.jpg` to point to the image
+* adapt (or create) the symbolic link `images/slide_image.jpg` to point to the image
   you want to use in all your slides as illustration image
 
 
