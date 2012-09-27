@@ -1,7 +1,7 @@
 % =============================================================================
 % File:  sample_slides.tex --  Example of the use of the Falkor Beamer theme
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Mon 2012-06-04 16:00 svarrette>
+% Time-stamp: <Thu 2012-09-27 20:58 svarrette>
 % 
 % Copyright (c) 2012 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 % .             http://varrette.gforge.uni.lu
@@ -27,6 +27,7 @@
 \usepackage{rotating}
 \usepackage{xspace}
 \usepackage{listings}
+\usepackage{acronym}
 \usepackage[official]{eurosym} % Euro symbol
 
 \usepackage{colortbl}
@@ -73,8 +74,8 @@
     \frametitle{Summary}
     {\scriptsize\tableofcontents[currentsection]}
   }
+  \addtocounter{framenumber}{-1}
 }
-
 
 \renewcommand{\epsilon}{\varepsilon}
 
@@ -105,30 +106,59 @@
 \frame{
   \frametitle{Sample usage}
 
-  \begin{itemize}
-    \item Get the latest version on
-      \href{https://github.com/Falkor/beamerthemeFalkor}{Github}
-    \item Copy the structure of this repository into your working
-      directory as follows:
-      \begin{cmdline}
-          \cmdlineentry{rsync -avzu --exclude "*.git" $\backslash$\\ ~~~~~/path/to/github/cloned/beamerthemeFalkor /path/to/working/dir}
-      \end{cmdline}
-
-    \item Copy and adapt the sample document \texttt{sample\_slides.tex}
+  \begin{block}{Bootstrap a new working directory}
       \begin{itemize}
-        \item[$\hookrightarrow$] run \texttt{make} to generate \texttt{sample\_slides.pdf}
+        \item Get the latest version on
+          \href{https://github.com/Falkor/beamerthemeFalkor}{Github}
+          \begin{cmdline}
+              \cmdlineentry{cd /path/to/cloning/dir}\\
+              \cmdlineentry{git clone https://github.com/Falkor/beamerthemeFalkor.git}
+          \end{cmdline}
+        \item Duplicate the sample structure of the freshly cloned repository
+          \begin{cmdline}
+              \cmdlineentry{cd /path/to/working/dir}\\
+              \cmdlineentry{rsync -avzu --exclude "*.git" $\backslash$\\ ~~~~~/path/to/cloning/dir/beamerthemeFalkor/ .}
+          \end{cmdline}
+        \item Copy and adapt the sample document \texttt{sample\_slides.tex}
+          \begin{itemize}
+            \item[$\hookrightarrow$] run \texttt{make} to generate \texttt{sample\_slides.pdf}
+          \end{itemize}
       \end{itemize}
-    \item Change the slides images to whatever you want by adapting the symbolic link
-      \texttt{images/slide\_image.jpg}:
+  \end{block}
+}
+
+\frame{
+  \frametitle{Sample usage}
+
+  \begin{block}{Git sub-modules approach}
+      \begin{itemize}
+        \item Assuming you want to use the theme in an existing git repo
+          \begin{cmdline}
+              \cmdlineentry{cd /path/to/working/dir}\\
+              \cmdlineentry{git submodule add $\backslash$\\
+                ~~~~~https://github.com/Falkor/beamerthemeFalkor.git
+                $\backslash$\\
+                ~~~~~.beamerthemeFalkor}\\
+              \cmdlineentry{ln -s
+                .beamerthemeFalkor/beamerthemeFalkor.sty .}
+          \end{cmdline}
+      \end{itemize}
+  \end{block}
+}
+
+\frame{
+  \frametitle{Changing the logo}
+
+  \begin{itemize}
+    \item The logo used by the theme is \texttt{images/slide\_image.jpg}
+    \item To use another logo:
       \begin{cmdline}
           \cmdlineentry{cd images}\\
           \cmdlineentry{wget http://path/to/myimage.jpg}\\
           \cmdlineentry{ln -sf myimage.jpg slide\_image.jpg}\\
       \end{cmdline}
-
   \end{itemize}
 }
-
 
 \section{Conclusion}
 
@@ -136,23 +166,65 @@
 \begin{frame}
     \frametitle{Conclusion}
 
+    \begin{itemize}
+      \item Summary point 1
+      \item Summary point 2
+    \end{itemize}
+
+    \begin{block}{Perspectives}
+        \begin{itemize}
+          \item Improve point 1
+          \item Improve point 2
+        \end{itemize}
+    \end{block}
+
 
 \end{frame}
 
 
+% ======================== END =========================
 
-
+\section*{Thank you for your attention...}
 \frame{
+  \frametitle{Questions?}
   \begin{center}
-      Thank you for your attention...
-      \vspace{1cm}
-
-      {\Large Questions?}
-
       \includegraphics[scale=0.2]{question.jpg}
   \end{center}
+
+  {\tiny
+    \tableofcontents
+
+  }
 }
 
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+% \appendix
+
+\frame{
+  \frametitle{Appendix}
+
+  \begin{acronym}\setlength\itemsep{-0.3em}
+      \acro{DFT}{Discrete Fourier Transform}
+      \acro{EA}{Evolutionary Algorithm}
+      \acro{PRNG}{[Pseudo]-Random Number Generator}
+      \acro{UL}{University of Luxembourg}
+  \end{acronym}
+
+  \textit{*Note: notice the slide number below...}
+}
+
+%.......
+\frame{
+  \frametitle{Another appendix slide}
+
+  \textit{Note again the slide number below...}
+  
+}
+
+
+\setcounter{framenumber}{\value{finalframe}}
 
 \end{document}
 

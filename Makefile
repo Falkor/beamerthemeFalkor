@@ -102,7 +102,7 @@ TARGETS      = $(DVI) $(TARGET_PDF) $(TARGET_PS_GZ)
 BACKUP_FILES = $(shell find . -name "*~")
 # Files to move to $(TRASH_DIR) after compilation
 # Never add *.tex (or any reference to source files) for this variable.
-TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.nav *.out *.snm
+TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.nav *.out *.snm *.rel
 
 ############################### Now starting rules ################################
 # Required rule : what's to be done each time 
