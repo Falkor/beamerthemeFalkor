@@ -1,7 +1,7 @@
 % =============================================================================
 % File:  sample_slides.tex --  Example of the use of the Falkor Beamer theme
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Thu 2012-09-27 20:58 svarrette>
+% Time-stamp: <Lun 2013-12-02 14:04 svarrette>
 % 
 % Copyright (c) 2012 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 % .             http://varrette.gforge.uni.lu
@@ -14,6 +14,7 @@
 % \documentclass[draft]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Style configuration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{ae,url}
 \usepackage{epsfig}
@@ -29,19 +30,13 @@
 \usepackage{listings}
 \usepackage{acronym}
 \usepackage[official]{eurosym} % Euro symbol
+\usepackage{wasysym} % for smiley 
 
 \usepackage{colortbl}
 \graphicspath{{images/}} % Add this directory to the searched paths for graphics
 
 \bibliographystyle{acm}
 
-% Listing stuff
-\newenvironment{cmdline}
-{\vspace{-0.5em}\begin{flushleft}\begin{scriptsize}}
-        {\end{scriptsize}\end{flushleft}\vspace{-0.5em}}
-
-\newcommand{\promptline}[2]{~~~~\textcolor{progressbar@fgblue}{\texttt{{\tiny #1\textnormal{\$>}}}} \texttt{#2}}
-\newcommand{\cmdlineentry}[1]{\promptline{}{#1}}
 \newcommand{\cmdlinefrontend}[1]{\promptline{(frontend)}{#1}}
 \newcommand{\cmdlinenode}[1]{\promptline{(node)}{#1}}
 \newcommand{\cmdlinecomment}[1]{\hfill{\tiny \textcolor{red}{\textit{\# #1}}}}
@@ -77,7 +72,6 @@
   \addtocounter{framenumber}{-1}
 }
 
-\renewcommand{\epsilon}{\varepsilon}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{The \texttt{Falkor} \LaTeX Beamer Style}
