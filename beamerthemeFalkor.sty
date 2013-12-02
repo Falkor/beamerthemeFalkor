@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Lun 2013-12-02 13:42 svarrette>
+% Time-stamp: <Lun 2013-12-02 13:51 svarrette>
 %
 % .            Copyright (c) 2009 Sebastien Varrette. 
 %
@@ -813,3 +813,14 @@
     {\scriptsize\tableofcontents[currentsection]}
   }
 }
+
+% Easy command-lines
+\newenvironment{cmdline}
+{\vspace{-0.5em}\begin{flushleft}\begin{scriptsize}}
+{\end{scriptsize}\end{flushleft}\vspace{-0.5em}}
+\newcommand{\promptline}[2]{~~~~\textcolor{progressbar@fgblue}{\texttt{{\tiny #1\textnormal{\$>}}}} \texttt{#2}}
+\newcommand{\cmdlineentry}[1]{\promptline{}{#1}}
+
+\newenvironment{configfile}[1]
+{\begin{exampleblock}{#1}\vspace{-0.5em}\begin{tiny}}
+{\end{tiny}\vspace{-0.5em}\end{exampleblock}}
