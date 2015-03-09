@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Lun 2013-12-02 16:45 svarrette>
+% Time-stamp: <Mar 2015-03-10 00:01 svarrette>
 %
 % .            Copyright (c) 2009 Sebastien Varrette. 
 %
@@ -300,14 +300,34 @@
 % Items...
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\newcommand{\setlistspacing}[2]{\def\@ld{#1}\expandafter\def\csname
+@list\romannumeral\@ld \endcsname{\leftmargin\csname
+leftmargin\romannumeral\@ld \endcsname
+              \topsep    #2
+              \parsep    0\p@   \@plus\p@
+              \itemsep   #2}}
+
+\def\@listii{\leftmargin\leftmarginii
+              \topsep    -0.2ex
+              \parsep    0\p@   \@plus\p@
+              \itemsep   \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+              \topsep    -0.2ex
+              \parsep    0\p@   \@plus\p@
+              \itemsep   \parsep}
+
+
 
 % \setbeamertemplate{items}[circle]
 % \setbeamertemplate{itemize item}{\begin{tikzpicture}\draw[draw=progressbar@bgblue!60!white,fill=progressbar@bgblue!40!white] (0, 0) circle (0.07);\end{tikzpicture}}
 \setbeamertemplate{itemize item}{
   \begin{tikzpicture}\shade[ball color=fg!80!bg] (0, 0) circle (0.07);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.07);\end{tikzpicture}%
 }
-\setbeamertemplate{itemize subitem}{\begin{tikzpicture}\shade[ball color=fg!80!white] (0, 0) circle (0.05);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.05);\end{tikzpicture}}
-\setbeamertemplate{itemize subsubitem}{\begin{tikzpicture}\shade[ball color=fg!80!white] (0, 0) circle (0.05);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.05);\end{tikzpicture}}
+%\setbeamertemplate{itemize subitem}{\begin{tikzpicture}\shade[ball color=fg!80!white] (0, 0) circle (0.05);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.05);\end{tikzpicture}}
+\setbeamertemplate{itemize subitem}{$\hookrightarrow$}
+% \setbeamertemplate{itemize subsubitem}{\begin{tikzpicture}\shade[ball color=fg!80!white] (0, 0) circle (0.05);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.05);\end{tikzpicture}}
+\setbeamertemplate{itemize subsubitem}{$\checkmark$}
+
 
 % \setbeamertemplate{enumerate item}{\raisebox{-0.4ex}{\begin{tikzpicture}\shade[ball color=structure.fg!80!white] (0, 0) circle (0.07);\draw  (0, 0) node [draw=structure.fg!50!black!90!bg, inner sep=1pt] {\tiny\color{white}\bf\insertenumlabel};\end{tikzpicture}}}
 % \setbeamertemplate{enumerate subitem}{\raisebox{-0.4ex}{\begin{tikzpicture}\shade[ball color=structure.fg!80!white] (0, 0) circle (0.07);\draw  (0, 0) node [draw=structure.fg!50!black!90!bg, inner sep=1pt] {\tiny\color{white}\bf\insertenumlabel};\end{tikzpicture}}}
