@@ -2,7 +2,7 @@
 
 [![Licence](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
-       Time-stamp: <Dim 2015-03-29 14:28 svarrette>
+       Time-stamp: <Sat 2015-06-13 20:03 svarrette>
 
          _                                    _   _                         ______    _ _              
         | |                                  | | | |                       |  ____|  | | |             

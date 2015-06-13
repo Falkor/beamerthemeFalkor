@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Fri 2015-06-12 14:52 svarrette>
+% Time-stamp: <Sun 2015-06-14 00:14 svarrette>
 %
 % .            Copyright (c) 2009 Sebastien Varrette. 
 %
@@ -46,16 +46,21 @@
 %
 \ProvidesPackage{beamerthemeFalkor}[2015/06/11]
 
-\def\beamer@Falkor@logo{}
-\DeclareOptionBeamer{logo}{\def\beamer@Falkor@logo{#1}}
-\ExecuteOptionsBeamer{logo=images/slide_image.jpg} % Default
+\def\beamer@Falkor@image{}
+\DeclareOptionBeamer{image}{\def\beamer@Falkor@image{#1}}
+\ExecuteOptionsBeamer{image=images/slide_image.jpg} % Default
 
 \ProcessOptionsBeamer
 
 %\DeclareStringOption [images/slide_image.jpg]{logo}[<default>]
 
 \RequirePackage{tikz}
+\usetikzlibrary{positioning}
+
 \RequirePackage{bibunits}
+\RequirePackage{tcolorbox}
+\RequirePackage{calc}
+\RequirePackage{multicol}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% Color settings %%%%%%%
@@ -126,7 +131,7 @@
 \makeatletter
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
-\def\progressbar@imagename{\beamer@Falkor@logo}%
+\def\progressbar@imagename{\beamer@Falkor@image}%
 \def\progressbar@titlepage{picture}%
 \define@key{progressbar}{headline}[none]{%
   \def\progressbar@headline{#1}%
@@ -236,7 +241,7 @@
 \newcommand{\defblock}[1][]{
   \defbeamertemplate*{block \ifx#1\@empty\else#1\space\fi begin}{progressbar theme}
   {
-    \setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.6\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\begin{adjustwidth}{2ex}{1ex}\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle\end{adjustwidth}\mbox{}}\\[-1.8\baselineskip]% Just to be "babel-safe"
+    \setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.25\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\begin{adjustwidth}{2ex}{1ex}\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle\end{adjustwidth}\mbox{}}\\[-1.8\baselineskip]% Just to be "babel-safe"
       %\setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.25\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle}\\[-0.3cm]% Just to be "babel-safe"
         \twoptoff{}\tikz\draw[fg!20!bg] (0, 0) -- (\textwidth, 0);\twopton{}\fi%
         %\usebeamerfont{block body\ifx#1\@empty\else\space#1\fi}\ifx\insertblocktitle\@empty\else\global\let\itemize=\progressbar@itemize\fi \par
@@ -298,13 +303,13 @@
   \ifx\progressbar@frametitle\tempa
   \parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
   \parbox[c]{0.85\textwidth}{
-    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\else\ \insertsection\fi\ifx\insertsubsection\@empty\else\ \progressbar@separator\ \insertsubsection\fi}\\[0.5cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\else\ \phantom{H}\insertsection\fi\ifx\insertsubsection\@empty\else\ \progressbar@separator\ \insertsubsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
     \textbf{\vphantom{Hp}\insertframetitle}
   }
   \else
   \parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
   \parbox[c]{0.85\textwidth}{
-    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \phantom{|}\else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \vphantom{H}\else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
     \textbf{\vphantom{Hp}\insertframetitle}
   }
   %\vspace*{-0.5em}
@@ -465,7 +470,7 @@ leftmargin\romannumeral\@ld \endcsname
 
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
-\def\progressbar@imagename{\beamer@Falkor@logo}%
+\def\progressbar@imagename{\beamer@Falkor@image}%
 \def\progressbar@titlepage{picture}%
 \define@key{progressbar}{headline}[none]{%
   \def\progressbar@headline{#1}%
