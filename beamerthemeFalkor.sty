@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Mar 2015-03-10 00:01 svarrette>
+% Time-stamp: <Fri 2015-06-12 14:52 svarrette>
 %
 % .            Copyright (c) 2009 Sebastien Varrette. 
 %
@@ -44,7 +44,15 @@
 % Latest version of this file can be found on Github:
 %      https://github.com/Falkor/beamerthemeFalkor
 %
-\ProvidesPackage{beamerthemeFalkor}[2012/01/11]
+\ProvidesPackage{beamerthemeFalkor}[2015/06/11]
+
+\def\beamer@Falkor@logo{}
+\DeclareOptionBeamer{logo}{\def\beamer@Falkor@logo{#1}}
+\ExecuteOptionsBeamer{logo=images/slide_image.jpg} % Default
+
+\ProcessOptionsBeamer
+
+%\DeclareStringOption [images/slide_image.jpg]{logo}[<default>]
 
 \RequirePackage{tikz}
 \RequirePackage{bibunits}
@@ -118,7 +126,7 @@
 \makeatletter
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
-\def\progressbar@imagename{images/slide_image.jpg}%
+\def\progressbar@imagename{\beamer@Falkor@logo}%
 \def\progressbar@titlepage{picture}%
 \define@key{progressbar}{headline}[none]{%
   \def\progressbar@headline{#1}%
@@ -128,7 +136,7 @@
 }
 \define@key{progressbar}{imagename}{%
   \def\progressbar@imagename{#1}%
-  \pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\progressbar@imagename}
+%  \pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\progressbar@imagename}
 }
 \define@key{progressbar}{titlepage}[picture]{%
   \def\progressbar@titlepage{#1}%
@@ -212,13 +220,15 @@
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
+\RequirePackage{changepage}
+
 \newbox\progressbar@blockbox
 \newdimen\progressbar@boxheight
 \newdimen\progressbar@boxwidth
 
 % The ultimate trick to prevent the itemize-inside-blocks bug from happening...
 \let\progressbar@tempitemize=\itemize
-\def\progressbar@itemize{\ifhmode\else\vskip-0.85\topsep\fi\progressbar@tempitemize}
+\def\progressbar@itemize{\ifhmode\else\vskip-0.25\topsep\fi\progressbar@tempitemize}
 % 
 
 %%% Bruno's factorized version begins %%%
@@ -226,11 +236,17 @@
 \newcommand{\defblock}[1][]{
   \defbeamertemplate*{block \ifx#1\@empty\else#1\space\fi begin}{progressbar theme}
   {
-    \setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.25\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle}\\[-0.3cm]% Just to be "babel-safe"
-        \twoptoff{}\tikz\draw[fg!20!bg] (0, 0) -- (\textwidth, 0);\twopton{}\fi\usebeamerfont{block body\ifx#1\@empty\else\space#1\fi}\ifx\insertblocktitle\@empty\else\global\let\itemize=\progressbar@itemize\fi \par
+    \setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.6\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\begin{adjustwidth}{2ex}{1ex}\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle\end{adjustwidth}\mbox{}}\\[-1.8\baselineskip]% Just to be "babel-safe"
+      %\setbox\progressbar@blockbox=\hbox to 0.95\textwidth\bgroup\vbox\bgroup\vskip-0.25\baselineskip\raggedright\begin{minipage}{0.95\textwidth} \ifx\insertblocktitle\@empty\else{\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle}\\[-0.3cm]% Just to be "babel-safe"
+        \twoptoff{}\tikz\draw[fg!20!bg] (0, 0) -- (\textwidth, 0);\twopton{}\fi%
+        %\usebeamerfont{block body\ifx#1\@empty\else\space#1\fi}\ifx\insertblocktitle\@empty\else\global\let\itemize=\progressbar@itemize\fi \par
+        \usebeamerfont{block body\ifx#1\@empty\else\space#1\fi}%
+        \ifx\insertblocktitle\@empty\else\global\let\itemize=\progressbar@itemize\fi \par
+      %\begin{adjustwidth}{1ex}{1ex}
       }
       \defbeamertemplate*{block \ifx#1\@empty\else#1\space\fi end}{progressbar theme}
       {
+      %\end{adjustwidth}
         \vphantom{y}
         \global\let\itemize=\progressbar@tempitemize\end{minipage}\vskip-0.25\baselineskip\egroup\egroup
     \progressbar@boxwidth=\wd\progressbar@blockbox
@@ -278,18 +294,20 @@
   \end{centering}
   \else
   \edef\tempa{picture-subsection}
+  \vspace*{-0.3em}%
   \ifx\progressbar@frametitle\tempa
   \parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
   \parbox[c]{0.85\textwidth}{
-    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \else\insertsection\fi\ifx\insertsubsection\@empty\else\ \progressbar@separator\ \insertsubsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\else\ \insertsection\fi\ifx\insertsubsection\@empty\else\ \progressbar@separator\ \insertsubsection\fi}\\[0.5cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
     \textbf{\vphantom{Hp}\insertframetitle}
   }
   \else
   \parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
   \parbox[c]{0.85\textwidth}{
-    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+    \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \phantom{|}\else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
     \textbf{\vphantom{Hp}\insertframetitle}
   }
+  %\vspace*{-0.5em}
   \fi
   \fi
 }
@@ -328,12 +346,23 @@ leftmargin\romannumeral\@ld \endcsname
 % \setbeamertemplate{itemize subsubitem}{\begin{tikzpicture}\shade[ball color=fg!80!white] (0, 0) circle (0.05);\draw[draw=fg!50!black!90!bg] (0, 0) circle (0.05);\end{tikzpicture}}
 \setbeamertemplate{itemize subsubitem}{$\checkmark$}
 
+\RequirePackage[outline]{contour}
 
 % \setbeamertemplate{enumerate item}{\raisebox{-0.4ex}{\begin{tikzpicture}\shade[ball color=structure.fg!80!white] (0, 0) circle (0.07);\draw  (0, 0) node [draw=structure.fg!50!black!90!bg, inner sep=1pt] {\tiny\color{white}\bf\insertenumlabel};\end{tikzpicture}}}
 % \setbeamertemplate{enumerate subitem}{\raisebox{-0.4ex}{\begin{tikzpicture}\shade[ball color=structure.fg!80!white] (0, 0) circle (0.07);\draw  (0, 0) node [draw=structure.fg!50!black!90!bg, inner sep=1pt] {\tiny\color{white}\bf\insertenumlabel};\end{tikzpicture}}}
-\setbeamertemplate{enumerate item}{\raisebox{-0.4ex}{\begin{tikzpicture}\node [draw=fg!50!black!90!bg, inner sep=1pt, shading=ball, circle, ball color=fg!80!white] {\tiny\color{bg}\bf\insertenumlabel};\end{tikzpicture}}}
-\setbeamertemplate{enumerate subitem}{\raisebox{-0.4ex}{\begin{tikzpicture}\node [draw=fg!50!black!90!bg, inner sep=1pt, shading=ball,circle, ball color=fg!80!white] {\tiny\color{bg}\bf\insertenumlabel};\end{tikzpicture}}}
-
+% \setbeamertemplate{enumerate item}{\raisebox{-0.4ex}{\begin{tikzpicture}\node [draw=fg!50!black!90!bg, inner sep=1pt, shading=ball, circle, ball color=fg!80!white] {\tiny\color{bg}\bf\insertenumlabel};\end{tikzpicture}}}
+% \setbeamertemplate{enumerate subitem}{\raisebox{-0.4ex}{\begin{tikzpicture}\node [draw=fg!50!black!90!bg, inner sep=1pt, shading=ball,circle, ball color=fg!80!white] {\tiny\color{bg}\bf\insertenumlabel};\end{tikzpicture}}}
+\newlength\posCorrection
+%\usepackage{enumitem}
+\setbeamertemplate{enumerate item}{%
+ 	\settototalheight\posCorrection{yX}%
+ 	\begin{tikzpicture}[baseline=-0.3\posCorrection]\node [draw=fg!50!black!90!bg, inner sep=0.7pt, shading=ball, circle, ball color=fg!80!white] {\color{bg}\contour{fg!50!black!90!bg}{\small\bf\insertenumlabel}};\end{tikzpicture}%
+ }
+ \setbeamertemplate{enumerate subitem}{(\alph{enumii})% %
+ 	% \settototalheight\posCorrection{yX}%
+ 	% \begin{tikzpicture}[baseline=-0.3\posCorrection]\node [draw=fg!50!black!90!bg, inner sep=0.7pt, shading=ball,circle, ball color=fg!80!white] {\color{bg}\contour{fg!50!black!90!bg}{\footnotesize\bf\insertenumlabel}};\end{tikzpicture}%
+ }
+  
 \normalsize
 \pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
 {%
@@ -436,7 +465,7 @@ leftmargin\romannumeral\@ld \endcsname
 
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
-\def\progressbar@imagename{images/slide_image.jpg}%
+\def\progressbar@imagename{\beamer@Falkor@logo}%
 \def\progressbar@titlepage{picture}%
 \define@key{progressbar}{headline}[none]{%
   \def\progressbar@headline{#1}%
@@ -446,7 +475,7 @@ leftmargin\romannumeral\@ld \endcsname
 }
 \define@key{progressbar}{imagename}{%
   \def\progressbar@imagename{#1}%
-  \pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\progressbar@imagename}
+  %\pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\progressbar@imagename}
 }
 \define@key{progressbar}{titlepage}[picture]{%
   \def\progressbar@titlepage{#1}%
@@ -503,7 +532,7 @@ leftmargin\romannumeral\@ld \endcsname
   \ifnum\insertintermediateframenumber=1\else
 
   \ifnum\progressbar@firstpb=0
-  \setbox\progressbar@framenumberbox=\hbox{\usebeamerfont{section in head/foot}\color{fg}\inserttotalframenumber~/~\inserttotalframenumber}
+  \setbox\progressbar@framenumberbox=\hbox{\usebeamerfont{section in head/foot}\footnotesize\color{fg}\inserttotalframenumber~/~\inserttotalframenumber}% \setbox\progressbar@framenumberbox=\hbox{\usebeamerfont{section in head/foot}\color{fg}\inserttotalframenumber~/~\inserttotalframenumber}
   \newdimen\progressbar@framenumberboxwidth
   \progressbar@framenumberboxwidth=\wd\progressbar@framenumberbox
 
@@ -534,14 +563,30 @@ leftmargin\romannumeral\@ld \endcsname
 
   \begin{tikzpicture}[thin]
       \usebeamercolor{section in head/foot}
+      %\fill [black!5] (0,0) rectangle (\paperwidth,0.7cm);
       \useasboundingbox (0, 0) rectangle  (\paperwidth, 0.6cm);
-      \draw (\progressbar@framenumberrectangle, 0.21cm) node [anchor=mid] {\color{structure}\insertframenumber~/~\insertintermediateframenumber};
+      \draw (\progressbar@framenumberrectangle, 0.21cm) node (stats) [anchor=mid] {\color{structure}\insertframenumber~/~\insertintermediateframenumber};
+      
+      % \node (logo_ul)[anchor=south, inner sep=1em] at (current page.south) { 
+      %     \includegraphics[width=\paperwidth]{UL-bottom.png}
+      % };
+      \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] { 
+        \pgfuseimage{logo}
+      };
       \draw (2.3cm, 0.4cm) node [anchor=mid] {\color{bg!30!fg}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}};
       \draw (\progressbar@titlerectangle, 0.21cm) node [anchor=south east] {\color{structure}\insertshorttitle};
       \draw[fg!30!bg, <->, >=serif cm] (\progressbar@leftbar, 0.21cm) -- (\progressbar@titlerectangle, 0.21cm);
       \draw (\progressbar@currentbarlength, 0.21cm)
       ++(\progressbar@leftbar, 0cm) node[anchor=north] {\color{fg!30!bg}$\blacktriangle$};
   \end{tikzpicture}
+  % \begin{tikzpicture}[remember picture,overlay]
+  %   \coordinate (logoplace)   at (0.9\paperwidth,0);
+  %   \coordinate (midsky)      at (0,.1\paperheight);
+  %   % Logos
+  %   \node (logo_ul)[fill=structure, rounded corners, anchor=south east, inner sep=1em] at (current page.south east) {%}logoplace |- midsky) {
+  %     \insertlogo
+  %   };
+  %   \end{tikzpicture}
   \fi
 }
 
@@ -621,7 +666,7 @@ leftmargin\romannumeral\@ld \endcsname
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \defbeamertemplate*{footline}{progressbar theme}{
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.6cm,dp=0ex]{structure.fg}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1cm,dp=0ex]{structure.fg}%
       \insertprogressbar
   \end{beamercolorbox}%
 }
@@ -633,7 +678,38 @@ leftmargin\romannumeral\@ld \endcsname
 % Title page...
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% \RequirePackage{textpos}
 
+% \pgfdeclareimage[width=\paperwidth]{ullogo}{UL-bottom2.png}
+
+% %\addtobeamertemplate{title page}{\vspace{3\baselineskip}}{}
+
+% % Add the Logo of your University
+% \addtobeamertemplate{title page}{
+%   \pgfuseimage{ullogo}
+%     % \begin{tikzpicture}[remember picture,overlay]
+%     %     \node [xshift=0cm,yshift=0cm] at (current page.center) {
+%     %         \includegraphics[width=\paperwidth, height=\paperheight]{UL-bottom2.png}%ogo_UL.pdf}
+%     %     };
+%     % \end{tikzpicture}
+% }{}
+
+% \addtobeamertemplate{title page}{
+%     \begin{tikzpicture}[remember picture,overlay]
+%       \node (logo_ul)[fill=white, rounded corners, anchor=south, inner sep=1em] at (0.5\paperwidth,0.5\paperheight) {
+%          \includegraphics[scale=0.4]{logo_UL.pdf}
+%        };
+%     \end{tikzpicture}
+% }{}
+
+% \addtobeamertemplate{frametitle}{}{%
+% \begin{textblock*}{100mm}(.85\textwidth,-1cm)
+% \includegraphics[height=1cm,width=2cm]{cat}
+% \end{textblock*}}
+
+% \usebackgroundtemplate{
+% \parbox[c][\paperheight][b]{\paperwidth}{\includegraphics[width=\paperwidth]{UL-bottom.png}}
+% }
 
 \defbeamertemplate*{title page}{progressbar theme}{
   \edef\tempa{picture}
@@ -654,7 +730,6 @@ leftmargin\romannumeral\@ld \endcsname
         \else{\usebeamerfont{date}\usebeamercolor{date}{\color{fg}\insertdate}}\\\fi
         \ifx\insertinstitute\@empty
         \else{\usebeamerfont{institute}\usebeamercolor{institute}{\color{fg}\insertinstitute}}\\\fi
-        %\insertlogo
     \end{center}
   }\vfill
   \else
@@ -674,7 +749,6 @@ leftmargin\romannumeral\@ld \endcsname
       \else{\usebeamerfont{date}\usebeamercolor{date}{\color{fg}\insertdate}}\\\fi
       \ifx\insertinstitute\@empty
       \else{\usebeamerfont{institute}\usebeamercolor{institute}{\color{fg}\insertinstitute}}\\\fi
-      \insertlogo
       \pgfuseshading{separationtitlepagelineshading}
       \vfill
   \end{center}
@@ -715,6 +789,7 @@ leftmargin\romannumeral\@ld \endcsname
 
 \defbeamertemplate*{background canvas}{progressbar theme}{\pgfuseshading{background shading}}%
 
+
 \AtBeginDocument{%
   {
     \usebeamercolor{section in head/foot}
@@ -724,6 +799,9 @@ leftmargin\romannumeral\@ld \endcsname
       % color(0.95\paperheight)=(progressbar primary.bg);
       color(\paperheight)=(white!40!section in head/foot.bg)
     }
+
+    %\pgfuseimage{ullogo}
+    %\parbox[c][\paperheight][b]{\paperwidth}{\includegraphics[width=\paperwidth]{UL-bottom2.png}}
 
     % \pgfdeclareverticalshading{background shading}{\the\paperwidth}{
     %   % color(0cm)=(section in head/foot.bg)%; color(3cm)=(bg)%; color(0.6\paperheight)=(bg); color(0.9\paperheight)=(section in head/foot.bg); color(\paperheight)=(black!40!section in head/foot.bg)
