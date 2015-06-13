@@ -3,8 +3,6 @@
 ---
 :project:
   :name: beamerthemeFalkor
-  :type:
-  - :latex
   :author: Sebastien Varrette
   :mail: sebastien.varrette@uni.lu
   :summary: My personal LaTeX Beamer theme
