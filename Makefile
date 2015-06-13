@@ -1,316 +1,248 @@
 ####################################################################################
 # Makefile (configuration file for GNU make - see http://www.gnu.org/software/make/)
+# Time-stamp: <Sat 2015-06-13 12:27 svarrette>
+#     __  __       _         __ _ _
+#    |  \/  | __ _| | _____ / _(_) | ___
+#    | |\/| |/ _` | |/ / _ \ |_| | |/ _ \
+#    | |  | | (_| |   <  __/  _| | |  __/
+#    |_|  |_|\__,_|_|\_\___|_| |_|_|\___|
 #
-# --------------------------------------------------------------------------------
-# This is a generic makefile in the sense that it doesn't require to be 
-# modified when adding/removing new source files.
-# --------------------------------------------------------------------------------
+# Copyright (c) 2012 Sebastien Varrette <Sebastien.Varrette@uni.lu>
+# .             http://varrette.gforge.uni.lu
 #
-# Author: Sebastien Varrette <Sebastien.Varrette@uni.lu>
-#          Web page : http://www-id.imag.fr/~svarrett/
-# Version : 1.2
-# Creation date : 2012-06-04
-#
-# Compilation of files written in LaTeX
-#
-# This makefile search for LaTeX sources from the current directory, identifies 
-# the main files (i.e the one containing the sequence '\begin{document}') and 
-# launch the compilation for the generation of PDFs and optionnaly compressed 
-# Postscript files. 
-# Two compilation modes can be configured using the USE_PDFLATEX variable:
-#    1/ Rely on pdflatex to generate directly a pdfs from the LaTeX sources. 
-#       The compilation follow then the scheme: 
-#
-#                main.tex --[pdflatex/bibtex]--> main.pdf + main.[aux|log etc.]
-#
-#       Note that in that case, your figures should be in pdf format instead of eps.
-#       To use this mode, just set the USE_PDFLATEX variable to 'yes'
-# 
-#    2/ Respect the classical scheme:                             +-[dvips]-> main.ps
-#                                                                 |             |             
-#                                                                 |        +-[gzip]
-#       main.tex -[latex/bibtex]-> main.dvi + main.[aux|log etc.]-+        |     
-#                                                                 |        +-> main.ps.gz     
-#                                                                 +-[dvipdf]-> main.pdf
-#       To use this mode, just set the USE_PDFLATEX variable to 'no'
-# In all cases: 
-#   - all the intermediate files (main.aux, main.log etc.) will be moved
-#     to $(TRASH_DIR)/ (if it exists). 
-#   - the dvi file (generated if pdflatex is not used) will stay in the current directory.  
-#   - other target files (pdfs + compressed Postscript files if pdflatex is not used)
-#     are moved to the $(OUTPUT_DIR) directory. 
-#     Note that this directory is automatically created if $(OUTPUT_DIR) differs from '.'
-#
-# Available Commands  
-# ------------------
-# make       : Compile LaTeX files, generated files (pdf etc.) are placed in $(OUTPUT_DIR)/ 
-# make force : Force re-compilation, even if not needed 
-# make clean : Remove all generated files 
-# make rtf :   Generate an RTF file using latex2rtf
-# make html  : generate HTML files from tex in $(HTML_DIR)/ (using latex2html)
-#                  The directory is created on the first invocation
-# make help      : print help message 
+####################################################################################
 #
 ############################## Variables Declarations ##############################
+SHELL = /bin/bash
 
-# set to 'yes' to use pdflatex for the direct generation of pdf from LaTeX sources
-# set to 'no' to use the classical scheme tex -> dvi -> [ps|pdf] by dvips
-USE_PDFLATEX = yes
+UNAME = $(shell uname)
 
-# Directory where PDF, Postcript files and other generated files will be placed
-# /!\ Please ensure there is no trailing space after the values
-OUTPUT_DIR = .
-TRASH_DIR  = .Trash
-HTML_DIR   = $(OUTPUT_DIR)/HTML
-# Check avalibility of source files
-TEX_SRC    = $(wildcard *.tex)
-ifeq ($(TEX_SRC),)
-all:
-	@echo "No source files available - I can't handle the compilation"
-	@echo "Please check the presence of source files (with .tex extension)"
-else
-# Main tex file and figures it may depend on 
-MAIN_TEX   = $(shell grep -l "[\]begin{document}" $(TEX_SRC) | xargs echo)
-FIGURES    = $(shell find . -name "*.eps" -o -name "*.fig" | xargs echo)
-ifeq ($(MAIN_TEX),)
-all:
-	@echo "I can't find any .tex file with a '\begin{document}' directive "\
-		"among $(TEX_SRC). Please define a main tex file!"
-else
-# Commands used during compilation
-LATEX        = $(shell which latex)
-PDFLATEX     = $(shell which pdflatex)
-LATEX2HTML   = $(shell which latex2html)
-BIBTEX       = $(shell which bibtex)
-DVIPS        = $(shell which dvips)
-DVIPDF       = $(shell which dvipdf)
-GZIP         = $(shell which gzip)
-LATEX2RTF    = $(shell which latex2rtf)
-# Generated files
-DVI    	     = $(MAIN_TEX:%.tex=%.dvi)
-PS           = $(MAIN_TEX:%.tex=%.ps)
-PS_GZ        = $(MAIN_TEX:%.tex=%.ps.gz)
-PDF          = $(MAIN_TEX:%.tex=%.pdf)
-RTF          = $(MAIN_TEX:%.tex=%.rtf)
-TARGET_PDF   = $(PDF)   
-TARGET_PS_GZ = $(PS_GZ) 
-ifneq ($(OUTPUT_DIR),.)
-TARGET_PDF   = $(PDF:%=$(OUTPUT_DIR)/%)
-TARGET_PS_GZ = $(PS_GZ:%=$(OUTPUT_DIR)/%) 
-endif
-TARGETS      = $(DVI) $(TARGET_PDF) $(TARGET_PS_GZ)
-BACKUP_FILES = $(shell find . -name "*~")
-# Files to move to $(TRASH_DIR) after compilation
-# Never add *.tex (or any reference to source files) for this variable.
-TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.nav *.out *.snm *.rel
+# Some directories
+SUPER_DIR   = $(shell basename `pwd`)
+
+# Git stuff management
+HAS_GITFLOW      = $(shell git flow version 2>/dev/null || [ $$? -eq 0 ])
+LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
+LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
+TAG_PREFIX = "v"
+# GITFLOW_BR_MASTER  = $(shell git config --get gitflow.branch.master)
+# GITFLOW_BR_DEVELOP = $(shell git config --get gitflow.branch.develop)
+GITFLOW_BR_MASTER=production
+GITFLOW_BR_DEVELOP=master
+
+CURRENT_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
+GIT_REMOTES    = $(shell git remote | xargs echo )
+GIT_DIRTY      = $(shell git diff --shortstat 2> /dev/null | tail -n1 )
+# Git subtrees repositories 
+# Format: '<url>[|<branch>]' - don't forget the quotes. if branch is ignored, 'master' is used
+#GIT_SUBTREE_REPOS = 'https://github.com/ULHPC/easybuild-framework.git|develop'  \
+					 'https://github.com/hpcugent/easybuild-wiki.git'
+GITSTATS     = ./.submodules/gitstats/gitstats
+GITSTATS_DIR = gitstats
+
+VERSION  = $(shell [ -f VERSION ] && head VERSION || echo "0.0.1")
+# OR try to guess directly from the last git tag
+#VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
+MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
+MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
+PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
+# total number of commits 		
+BUILD      = $(shell git log --oneline | wc -l | sed -e "s/[ \t]*//g")
+
+#REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
+#ROOTDIR    = $(shell git rev-parse --show-toplevel)
+NEXT_MAJOR_VERSION = $(shell expr $(MAJOR) + 1).0.0-b$(BUILD)
+NEXT_MINOR_VERSION = $(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD)
+NEXT_PATCH_VERSION = $(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)
+
+# Default targets
+TARGETS =
+
+# Local configuration
+LOCAL_MAKEFILE = .Makefile.local
+
+### Main variables
+.PHONY: all archive clean fetch help release setup start_bump_major start_bump_minor start_bump_patch subtree_setup subtree_up subtree_diff test upgrade versioninfo 
 
 ############################### Now starting rules ################################
-# Required rule : what's to be done each time 
-all: $(TARGET_PDF)
-
-# Dvi files generation
-dvi $(DVI) : $(TEX_SRC) $(FIGURES)
-	@echo "==> Now generating $(DVI)"
-	@for f in $(MAIN_TEX); do                                    \
-	   $(LATEX) $$f;                                             \
-	   bib=`grep "^[\]bibliography{" $$f|sed -e "s/^[\]bibliography{\(.*\)}/\1/"|tr "," " "`;\
-	   if [ ! -z "$$bib" ]; then                                 \
-	  	echo "==> Now running BibTeX ($$bib used in $$f)";   \
-		$(BIBTEX) `basename $$f .tex`;                       \
-		$(LATEX) $$f;                                        \
-	   fi;                                                       \
-	   $(LATEX) $$f;                                             \
-	   $(MAKE) move_to_trash;                                    \
-	done
-	@echo "==> $(DVI) generated"
-
-# Compressed Postscript generation 
-ps $(PS) $(TARGET_PS_GZ) : $(DVI)
-	@for dvi in $(DVI); do                                \
-	   	ps=`basename $$dvi .dvi`.ps;                  \
-	   	echo "==> Now generating $$ps.gz from $$dvi"; \
-	  	$(DVIPS) -q -o $$ps $$dvi;                    \
-	   	$(GZIP) -f $$ps;                              \
-	done
-	@if [ "$(OUTPUT_DIR)" != "." ]; then                        \
-		$(MAKE) create_output_dir;                           \
-		for ps in $(PS); do                                 \
-			echo "==> Now moving $$ps.gz to $(OUTPUT_DIR)/"; \
-			mv $$ps.gz $(OUTPUT_DIR);                   \
-		done;                                               \
-	fi
-
-###################### The following part is specific for the case where pdflatex is used ######################
-ifeq ("$(USE_PDFLATEX)", "yes")
-pdflatex $(TARGET_PDF): $(TEX_SRC) $(FIGURES)
-	@echo "==> Now generating $(PDF)"
-	@for f in $(MAIN_TEX); do                                    \
-	   $(PDFLATEX) $$f;                                             \
-	   bib=`grep "^[\]bibliography{" $$f|sed -e "s/^[\]bibliography{\(.*\)}/\1/"|tr "," " "`;\
-	   if [ ! -z "$$bib" ]; then                                 \
-	  	echo "==> Now running BibTeX ($$bib used in $$f)";   \
-		$(BIBTEX) `basename $$f .tex`;                       \
-		$(PDFLATEX) $$f;                                             \
-	   fi;                                                       \
-	   $(PDFLATEX) $$f;                                          \
-	   $(MAKE) move_to_trash;                                    \
-	done
-	@if [ "$(OUTPUT_DIR)" != "." ]; then                         \
-		$(MAKE) create_output_dir;                           \
-		for pdf in $(PDF); do                                \
-			echo "==> Now moving $$pdf to $(OUTPUT_DIR)/"; \
-			mv $$pdf $(OUTPUT_DIR);                      \
-		done;                                                \
-	fi
-	@$(MAKE) help
-
-###################### End of specific case where pdflatex is used ######################
-else 
-pdf $(TARGET_PDF): $(DVI)
-	@for dvi in $(DVI); do                                \
-	   	ps=`basename $$dvi .dvi`.pdf;                 \
-	   	echo "==> Now generating $$pdf from $$dvi";   \
-	  	$(DVIPDF) $$dvi;                              \
-	done
-	$(MAKE) create_output_dir           	     
-	@if [ "$(OUTPUT_DIR)" != "." ]; then                             \
-		for pdf in $(PDF); do                                    \
-			echo "==> Now moving $$pdf to $(OUTPUT_DIR)/";   \
-			mv $$pdf $(OUTPUT_DIR);                          \
-		done;                                                    \
-	fi
-	@$(MAKE) help
+# Load local settings, if existing (to override variable eventually)
+ifneq (,$(wildcard $(LOCAL_MAKEFILE)))
+include $(LOCAL_MAKEFILE)
 endif
-###################### End of specific case where pdflatex is NOT used ######################
 
-TO_TRASH=$(shell ls $(TO_MOVE) 2>/dev/null | xargs echo)
-move_to_trash:
-	@if [ ! -z "${TO_TRASH}" -a -d $(TRASH_DIR) -a "$(TRASH_DIR)" != "." ]; then  \
-                echo "==> Now moving ${TO_TRASH} to $(TRASH_DIR)/";                   \
-                mv -f ${TO_TRASH} $(TRASH_DIR)/;                                      \
-        elif [ ! -d $(TRASH_DIR) ]; then                             \
-                echo "*** /!\ The trah directory $(TRASH_DIR)/ does not exist!!!";       \
-                echo "***     May be you should create it to hide the files ${TO_TRASH}";\
-        fi;   
+# Required rule : what's to be done each time 
+all: $(TARGETS)
 
-create_output_dir: 
-	@if [ ! -d $(OUTPUT_DIR) ]; then                                                  \
-		echo "    /!\ $(OUTPUT_DIR)/ does not exist ==> Now creating ./$(OUTPUT_DIR)/"; \
-		mkdir -p ./$(OUTPUT_DIR);                                                 \
-	fi;  
+# Test values of variables - for debug purposes  
+test:
+	@echo "--- Compilation commands --- "
+	@echo "HAS_GITFLOW      -> '$(HAS_GITFLOW)'"
+	@echo "--- Directories --- "
+	@echo "SUPER_DIR    -> '$(SUPER_DIR)'"
+	@echo "--- Git stuff ---"
+	@echo "GITFLOW            -> '$(GITFLOW)'"
+	@echo "GITFLOW_BR_MASTER  -> '$(GITFLOW_BR_MASTER)'"
+	@echo "GITFLOW_BR_DEVELOP -> '$(GITFLOW_BR_DEVELOP)'"
+	@echo "CURRENT_BRANCH     -> '$(CURRENT_BRANCH)'"
+	@echo "GIT_REMOTES        -> '$(GIT_REMOTES)'"
+	@echo "GIT_DIRTY          -> '$(GIT_DIRTY)'"
+	@echo "GIT_SUBTREE_REPOS  -> '$(GIT_SUBTREE_REPOS)'"
+	@echo ""
+	@echo "Consider running 'make versioninfo' to get info on git versionning variables"
+
+############################### Archiving ################################
+archive: clean
+	tar -C ../ -cvzf ../$(SUPER_DIR)-$(VERSION).tar.gz --exclude ".svn" --exclude ".git"  --exclude "*~" --exclude ".DS_Store" $(SUPER_DIR)/
+
+############################### Git Bootstrapping rules ################################
+setup:
+	git fetch origin
+	git branch --set-upstream $(GITFLOW_BR_MASTER) origin/$(GITFLOW_BR_MASTER)
+	git config gitflow.branch.master     $(GITFLOW_BR_MASTER)
+	git config gitflow.branch.develop    $(GITFLOW_BR_DEVELOP)
+	git config gitflow.prefix.feature    feature/
+	git config gitflow.prefix.release    release/
+	git config gitflow.prefix.hotfix     hotfix/
+	git config gitflow.prefix.support    support/
+	git config gitflow.prefix.versiontag $(TAG_PREFIX)
+	$(MAKE) update 
+	$(if $(GIT_SUBTREE_REPOS), $(MAKE) subtree_setup)
+
+fetch:
+	git fetch --all -v
+
+versioninfo:
+	@echo "Current version: $(VERSION)"
+	@echo "Last tag: $(LAST_TAG)"
+	@echo "$(shell git rev-list $(LAST_TAG).. --count) commit(s) since last tag"
+	@echo "Build: $(BUILD) (total number of commits)"
+	@echo "next major version: $(NEXT_MAJOR_VERSION)"
+	@echo "next minor version: $(NEXT_MINOR_VERSION)"
+	@echo "next patch version: $(NEXT_PATCH_VERSION)"
+
+### Git flow management - this should be factorized 
+ifeq ($(HAS_GITFLOW),)
+start_bump_patch start_bump_minor start_bump_major release: 
+	@echo "Unable to find git-flow on your system. "
+	@echo "See https://github.com/nvie/gitflow for installation details"
+else
+start_bump_patch: clean
+	@echo "Start the patch release of the repository from $(VERSION) to $(NEXT_PATCH_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_PATCH_VERSION)
+	@echo $(NEXT_PATCH_VERSION) > VERSION
+	git commit -s -m "Patch bump to version $(NEXT_PATCH_VERSION)" VERSION
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
+
+start_bump_minor: clean
+	@echo "Start the minor release of the repository from $(VERSION) to $(NEXT_MINOR_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_MINOR_VERSION)
+	@echo $(NEXT_MINOR_VERSION) > VERSION
+	git commit -s -m "Minor bump to version $(NEXT_MINOR_VERSION)" VERSION
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
+
+start_bump_major: clean
+	@echo "Start the major release of the repository from $(VERSION) to $(NEXT_MAJOR_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_MAJOR_VERSION)
+	@echo $(NEXT_MAJOR_VERSION) > VERSION
+	git commit -s -m "Major bump to version $(NEXT_MAJOR_VERSION)" VERSION
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
+
+release: clean 
+	git flow release finish -s $(VERSION)
+	git checkout $(GITFLOW_BR_MASTER)
+	git push origin
+	git checkout $(GITFLOW_BR_DEVELOP)
+	git push origin
+	git push origin --tags
+endif
+
+### Git submodule management: upgrade to the latest version
+update:
+	git submodule init
+	git submodule update
+
+upgrade: update
+	git submodule foreach 'git fetch origin; git checkout $$(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
+	@for submoddir in $(shell git submodule status | awk '{ print $$2 }' | xargs echo); do \
+		git commit -s -m "Upgrading Git submodule '$$submoddir' to the latest version" $$submoddir ;\
+	done
+
+
+### Git subtree management 
+ifeq ($(GIT_SUBTREE_REPOS),)
+subtree_setup subtree_diff subtree_up:
+	@echo "no repository configured in GIT_SUBTREE_REPOS..."
+else
+subtree_setup:
+	@for elem in $(GIT_SUBTREE_REPOS); do \
+		url=`echo $$elem | cut -d '|' -f 1`; \
+		repo=`basename $$url .git`; \
+		if [[ ! "$(GIT_REMOTES)" =~ "$$repo"  ]]; then \
+			echo "=> initializing Git remote '$$repo'"; \
+			git remote add -f $$repo $$url; \
+		fi \
+	done
+
+subtree_diff:
+	@for elem in $(GIT_SUBTREE_REPOS); do \
+		url=`echo $$elem | cut -d '|' -f 1`; \
+		repo=`basename $$url .git`; \
+		path=`echo $$repo | tr '-' '/'`; \
+		br=`echo $$elem | cut -d '|' -f 2`;  \
+		[ "$$br" == "$$url" ] && br='master'; \
+		echo -e "\n============ diff on subtree '$$path' with remote '$$repo/$$br' ===========\n"; \
+		git diff $${repo}/$$br $(CURRENT_BRANCH):$$path; \
+	done
+
+subtree_up: 
+	$(if $(GIT_DIRTY), $(error "Unable to pull subtree(s): Dirty Git repository"))
+	@for elem in $(GIT_SUBTREE_REPOS); do \
+		url=`echo $$elem | cut -d '|' -f 1`; \
+		repo=`basename $$url .git`; \
+		path=`echo $$repo | tr '-' '/'`; \
+		br=`echo $$elem | cut -d '|' -f 2`;  \
+		[ "$$br" == "$$url" ] && br='master'; \
+		echo -e "\n===> pulling changes into subtree '$$path' using remote '$$repo/$$br'"; \
+		echo -e "     \__ fetching remote '$$repo'"; \
+		git fetch $$repo; \
+		echo -e "     \__ pulling changes"; \
+		git subtree pull --prefix $$path --squash $${repo} $${br}; \
+	done
+endif
 
 
 # Clean option
 clean:
-	rm -f *.dvi $(RTF) $(TO_MOVE) $(BACKUP_FILES)
-	@if [ ! -z "$(OUTPUT_DIR)" -a -d $(OUTPUT_DIR) -a "$(OUTPUT_DIR)" != "." ]; then       \
-	   for f in $(MAIN_TEX); do                                  \
-		base=`basename $$f .tex`;                            \
-		echo "==> Now cleaning $(OUTPUT_DIR)/$$base*";       \
-		rm -rf $(OUTPUT_DIR)/$$base*;                        \
-           done                                                      \
-	fi
-	@if [ "$(OUTPUT_DIR)" == "." ]; then                         \
-	   for f in $(MAIN_TEX); do                                  \
-		base=`basename $$f .tex`;                            \
-		echo "==> Now cleaning $$base.ps.gz and $$base.pdf"; \
-		rm -rf $$base.ps.gz $$base.pdf;                	     \
-	   done							     \
-	fi
-	@if [ ! -z "$(TRASH_DIR)" -a -d $(TRASH_DIR)  -a "$(TRASH_DIR)" != "." ];   then       \
-	   for f in $(MAIN_TEX); do                                  \
-		base=`basename $$f .tex`;                            \
-		echo "==> Now cleaning $(TRASH_DIR)/$$base*";        \
-		rm -rf $(TRASH_DIR)/$$base*;                         \
-	   done                                                      \
-	fi
-	@if [ ! -z "$(HTML_DIR)" -a -d $(HTML_DIR) -a "$(HTML_DIR)" != "." ]; then       \
-	   echo "==> Now removing $(HTML_DIR)";                      \
-	   rm  -rf $(HTML_DIR);                                      \
-	fi
+	@echo nothing to be cleaned for the moment
 
-# force recompilation
-force :
-	@touch $(MAIN_TEX)
-	@$(MAKE)
 
-# Test values of variables - for debug purpose  
-test:
-	@echo "USE_PDFLATEX: $(USE_PDFLATEX)"
-	@echo "--- Directories --- "
-	@echo "OUTPUT_DIR -> $(OUTPUT_DIR)"
-	@echo "TRASH_DIR  -> $(TRASH_DIR)"
-	@echo "HTML_DIR   -> $(HTML_DIR)"
-	@echo "--- Compilation commands --- "
-	@echo "PDFLATEX   -> $(PDFLATEX)"
-	@echo "LATEX      -> $(LATEX)"
-	@echo "LATEX2HTML -> $(LATEX2HTML)"
-	@echo "LATEX2RTF  -> $(LATEX2RTF)"
-	@echo "BIBTEX     -> $(BIBTEX)"
-	@echo "DVIPS      -> $(DVIPS)"
-	@echo "DVIPDF     -> $(DVIPDF)"
-	@echo "GZIP       -> $(GZIP)"
-	@echo "--- Files --- "
-	@echo "TEX_SRC    -> $(TEX_SRC)"
-	@echo "MAIN_TEX   -> $(MAIN_TEX)"
-	@echo "FIGURES    -> $(FIGURES)"
-	@echo "BIB_FILES  -> $(BIB_FILES)"
-	@echo "DVI        -> $(DVI)"
-	@echo "PS         -> $(PS)"
-	@echo "PS_GZ      -> $(PS_GZ)"
-	@echo "PDF        -> $(PDF)"
-	@echo "TO_MOVE    -> $(TO_MOVE)"
-	@echo "TARGET_PS_GZ -> $(TARGET_PS_GZ)"
-	@echo "TARGET_PDF   -> $(TARGET_PDF)"
-	@echo "TARGETS      -> $(TARGETS)"
-	@echo "BACKUP_FILES -> $(BACKUP_FILES)"
+# Perform various git statistics
+stats:
+	@if [ ! -d $(GITSTATS_DIR) ]; then mkdir -p $(GITSTATS_DIR); fi
+	$(GITSTATS) . $(GITSTATS_DIR)/
+
+
+
+# # force recompilation
+# force :
+# 	@touch $(MAIN_TEX)
+# 	@$(MAKE)
+
 
 # print help message
 help :
-	@echo '+---------------------------------------------------------------+'
-	@echo '|                        Available Commands                     |'
-	@echo '+------------+--------------------------------------------------+'
-	@echo '| make       | Compile LaTeX files.                             |'
-	@echo '|            | Generated files (pdf etc.) are placed in $(OUTPUT_DIR)/ '
-	@echo '| make force | Force re-compilation, even if not needed         |'
-	@echo '| make clean | Remove all generated files                       |'
-	@echo '| make html  | Generate HTML files from TeX in $(HTML_DIR)/     '
-	@echo '| make help  | Print help message                               |'
-	@echo '+------------+--------------------------------------------------+'
+	@echo '+----------------------------------------------------------------------+'
+	@echo '|                        Available Commands                            |'
+	@echo '+----------------------------------------------------------------------+'
+	@echo '| make setup:   Initiate git-flow for your local copy of the repository|'
+	@echo '| make start_bump_{major,minor,patch}: start a new version release with|'
+	@echo '|               git-flow at a given level (major, minor or patch bump) |'
+	@echo '| make release: Finalize the release using git-flow                    |'
+	@echo '+----------------------------------------------------------------------+'
 
-# RTF generation using latex2rtf
-rtf $(RTF): $(TARGET_PDF)
-ifeq ($(LATEX2RTF),)
-	@echo "Please install latex2rtf to use this option!"
-else
-	@echo "==> Now generating $(RTF)"
-	-cp $(TRASH_DIR)/*.aux $(TRASH_DIR)/*.bbl .
-	@for f in $(MAIN_TEX); do    \
-	   $(LATEX2RTF) -i english $$f;  \
-	done
-	@$(MAKE) move_to_trash
-	@echo "==> $(RTF) is now generated"
-	@$(MAKE) help
-endif
-
-
-# HTML pages generation using latex2html
-# First check that $(LATEX2HTML) and $(HTML_DIR)/ exist
-html :
-ifeq ($(LATEX2HTML),)
-	@echo "Please install latex2html to use this option!"
-	@echo "('apt-get install latex2html' under Debian)"
-else
-	@if [ ! -d ./$(HTML_DIR) ]; then                                    \
-	   echo "$(HTML_DIR)/ does not exist => Now creating $(HTML_DIR)/"; \
-	   mkdir -p ./$(HTML_DIR);                                          \
-	fi
-	-cp $(TRASH_DIR)/*.aux $(TRASH_DIR)/*.bbl .
-	$(LATEX2HTML) -show_section_numbers -local_icons -split +1 \
-		-dir $(HTML_DIR) $(MAIN_TEX)
-	@rm -f *.aux *.bbl $(HTML_DIR)/*.tex $(HTML_DIR)/*.aux $(HTML_DIR)/*.bbl
-	@echo "==> HTML files generated in $(HTML_DIR)/" 
-	@echo "May be you can try to execute 'mozilla ./$(HTML_DIR)/index.html'"
-endif
-endif
-endif

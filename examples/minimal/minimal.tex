@@ -1,0 +1,247 @@
+% =============================================================================
+% File:  minimal.tex --  Example of the use of the Falkor Beamer theme
+% Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
+% Time-stamp: <Sun 2015-06-14 00:13 svarrette>
+% 
+% Copyright (c) 2012-2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
+% 
+% For more information:
+% - LaTeX: http://www.latex-project.org/
+% - Beamer: https://bitbucket.org/rivanvx/beamer/
+% - LaTeX symbol list:
+% http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf
+% 
+% Latest version of these files can be found on Github:
+% https://github.com/Falkor/beamerthemeFalkor
+% =============================================================================
+
+\documentclass{beamer}
+% \documentclass[draft]{beamer}
+
+% The key part to use my theme -- if you precise nothing, the image that
+% illustrate the slides is assumed to be images/slides_image.jpg
+\usetheme[image=logo_github.png]{Falkor}
+
+% Not integrated in my theme as not everybody wants that
+\AtBeginSection[]
+{
+  \frame{
+    \frametitle{Summary}
+    {\scriptsize\tableofcontents[currentsection]}
+  }
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{The \texttt{Falkor} \LaTeX Beamer Style}
+\subtitle{A Minimal Example}
+
+\author{S\'ebastien Varrette}
+\institute[CSC research unit]{
+  Computer Science and Communications (CSC) Research Unit,
+  University of Luxembourg, Luxembourg
+}
+
+% Mandatory to **declare** a logo to be placed on the bottom right -- normally the
+% university logo. ADAPT ACCORDINGLY:
+\pgfdeclareimage[height=0.8cm]{logo}{logo_UL.pdf}
+
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frame}
+  \vspace{2.5em}
+  \titlepage
+\end{frame}
+
+% .......
+\frame{
+  \begin{center}
+    \textbf{Latest versions available on
+      \href{https://github.com/Falkor/}{Github}}:
+    \vfill
+    \begin{description}
+      \item[Beamer theme Falkor:] \hfill
+      \myurl{https://github.com/Falkor/beamerthemeFalkor}
+      \item[Generic Makefiles:] \hfill
+      \myurl{https://github.com/Falkor/Makefiles}
+    \end{description}
+  \end{center}
+}
+
+% ......
+\frame{
+  \frametitle{Summary}
+  {\scriptsize
+    \tableofcontents
+  }
+}
+
+% ===============================================
+\section{Introduction}
+% ===============================================
+
+% .......
+\frame{
+  \frametitle{Introduction}
+
+  \begin{itemize}
+    \item Topic of the talk
+    \begin{itemize}
+      \item a sub item
+    \end{itemize}
+  \end{itemize}
+
+  \begin{block}{A block -- Objective}
+    \begin{enumerate}
+      \item first objective
+      \item second objective
+    \end{enumerate}
+  \end{block}
+
+}
+
+% ===============================================
+\section{Related Work}
+% ===============================================
+
+\subsection{A First Topic}
+
+% .......
+\frame{
+  \frametitle{State-of-the-art: First Topic}
+  \hfill\includegraphics[width=4em]{logo_github.png}
+
+  \begin{itemize}
+    \item<+-> first item
+    \item<+-> second item
+    \begin{itemize}
+      \item sub item
+    \end{itemize}
+  \end{itemize}
+
+  \uncover<3>{
+    \begin{alertblock}{}
+      \centering
+      That's and \alert{alertblock} to display important results
+    \end{alertblock}
+  }
+}
+
+
+\subsection{A second Topic}
+
+% .......
+\frame{
+  \frametitle{State-of-the-art: Second Topic}
+
+  \begin{exampleblock}{Example}
+    An example block
+  \end{exampleblock}
+
+}
+
+% ===============================================
+\section{Experimental Setup}
+% ===============================================
+
+% ===============================================
+\section{Experimental Validation}
+% ===============================================
+
+\subsection{Test Case 1}
+\subsection{Test Case 2}
+
+
+% ===============================================
+\section{Conclusion}
+% ===============================================
+
+% ............
+\begin{frame}
+  \frametitle{Conclusion}
+
+  \begin{itemize}
+    \item Summary point 1
+    \item Summary point 2
+  \end{itemize}
+
+  \begin{block}{Perspectives}
+    \begin{itemize}
+      \item Improve point 1
+      \item Improve point 2
+    \end{itemize}
+  \end{block}
+
+
+\end{frame}
+
+
+
+
+
+% ======================== END =========================
+\section*{Thank you for your attention...}
+\frame{
+  \frametitle{Questions?}
+   % ~~~~~~~~~~~~~~
+   \begin{columns}
+       \column{0.5\textwidth}
+       %\emph{Contact}\\
+       {\tiny
+         \emph{Sebastien Varrette}\\
+         ~~~~ \textit{mail:} \href{mailto:sebastien.varrette@uni.lu}{sebastien.varrette@uni.lu}\\
+         ~~~~ Office E-007\\
+         ~~~~ Campus Kirchberg\\
+         ~~~~ 6, rue Coudenhove-Kalergi\\
+         ~~~~ L-1359 Luxembourg
+
+       }
+       \column{0.5\textwidth}
+       %\scalebox{8}{\emph{?}}
+       \includegraphics[width=1.5in]{question.jpg}
+   \end{columns}
+   % Below is the table of content over 2 columns
+   \vfill
+   \begin{multicols}{2}
+     {\tiny \tableofcontents}
+   \end{multicols}
+   
+}
+
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+% \appendix
+
+\frame{
+  \frametitle{Appendix}
+
+  A first appendix page\footnote{notice the slide number below...}
+
+}
+
+% .......
+\frame{
+  \frametitle{Another appendix slide}
+
+  \textit{Note again the slide number below...}
+
+}
+
+
+\setcounter{framenumber}{\value{finalframe}}
+
+\end{document}
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+% 
+% Local Variables:
+% mode: latex
+% mode: flyspell
+% mode: visual-line
+% TeX-master: "."
+% End:
