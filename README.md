@@ -1,26 +1,31 @@
--*- mode: markdown; mode: visual-line; fill-column: 80 -*-
+-*- mode: markdown; mode: visual-line; -*-
 
 [![Licence](https://img.shields.io/badge/license-CC by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)
 
-       Time-stamp: <Dim 2015-03-29 14:28 svarrette>
+                 _____     _ _                ____
+                |  ___|_ _| | | _____  _ __  | __ )  ___  __ _ _ __ ___   ___ _ __
+                | |_ / _` | | |/ / _ \| '__| |  _ \ / _ \/ _` | '_ ` _ \ / _ \ '__|
+                |  _| (_| | |   < (_) | |    | |_) |  __/ (_| | | | | | |  __/ |
+                |_|  \__,_|_|_|\_\___/|_|    |____/ \___|\__,_|_| |_| |_|\___|_|
 
-         _                                    _   _                         ______    _ _              
-        | |                                  | | | |                       |  ____|  | | |             
-        | |__   ___  __ _ _ __ ___   ___ _ __| |_| |__   ___ _ __ ___   ___| |__ __ _| | | _____  _ __ 
-        | '_ \ / _ \/ _` | '_ ` _ \ / _ \ '__| __| '_ \ / _ \ '_ ` _ \ / _ \  __/ _` | | |/ / _ \| '__|
-        | |_) |  __/ (_| | | | | | |  __/ |  | |_| | | |  __/ | | | | |  __/ | | (_| | |   < (_) | |   
-        |_.__/ \___|\__,_|_| |_| |_|\___|_|   \__|_| |_|\___|_| |_| |_|\___|_|  \__,_|_|_|\_\___/|_|   
-                                                                                                       
-                                                                                                       
-       Copyright (c) 2015 Sebastien Varrette <sebastien.varrette@uni.lu>
+                                  _____ _
+                                 |_   _| |__   ___ _ __ ___   ___
+                                   | | | '_ \ / _ \ '_ ` _ \ / _ \
+                                   | | | | | |  __/ | | | | |  __/
+                                   |_| |_| |_|\___|_| |_| |_|\___|
 
-My personal LaTeX Beamer theme
-* [CC by-nc-sa Licence](http://creativecommons.org/licenses/by-nc-sa/4.0)
-* [Sources](https://github.com/Falkor/beamerthemeFalkor)
+                  Copyright (c) 2015 Sebastien Varrette <sebastien.varrette@uni.lu>
+
+| [Project Page](https://github.com/Falkor/beamerthemeFalkor) | [Sources](https://github.com/Falkor/beamerthemeFalkor) |              [Issues](https://github.com/Falkor/beamerthemeFalkor/issues) |
 
 ## Synopsis
 
-My personal LaTeX Beamer theme
+My personal LaTeX Beamer theme, provided in a working environment. 
+
+This theme is largely based on the [progressbar](http://recherche.noiraudes.net/fr/LaTeX.php) beamer theme (by Sylvain Bouveret) with my own customization to fit my tastes. 
+So feel free to send him a postal card (as he asks for ;) )
+
+      Progressbar Version: 0.42 September 2010.
 
 ## Installation 
 
@@ -31,55 +36,53 @@ This repository is hosted on [Github](https://github.com/Falkor/beamerthemeFalko
     $> cd beamerthemefalkor
     $> make setup
 
+Then you can copy the `beamerthemeFalkor.sty` in your own repository.
 
-## Resources
+## Usage
 
-### Git
+```latex
+\documentclass{beamer}
 
-This repository make use of [Git](http://git-scm.com/) such that you should have
-it installed on your working machine: 
+% customize the image using the image=<path> option
+\usetheme[image=logo_github.png]{Falkor}
 
-       $> apt-get install git-core # On Debian-like systems
-	   $> yum install git          # On CentOS-like systems
-       $> brew install git         # On Mac OS, using [Homebrew](http://mxcl.github.com/homebrew/)
-       $> port install git         # On Mac OS, using MacPort
+% customize the logo (to be placed on the bottom right) as follows:
+\pgfdeclareimage[height=0.8cm]{logo}{logo_UL.pdf}
+```
 
-Consider these resources to become more familiar (if not yet) with Git:
+You probably want to use [my own LaTeX Makefile](https://github.com/Falkor/Makefiles/blob/devel/latex/Makefile) combined with my generic [LaTeX style file](https://github.com/Falkor/Makefiles/blob/devel/latex/template-article-styles/_style.sty) as done in the [advanced example](examples/advanced) 
 
-* [Simple Git Guide](http://rogerdudler.github.io/git-guide/)
-* [Git book](http://book.git-scm.com/index.html)
-* [Github:help](http://help.github.com/mac-set-up-git/)
-* [Git reference](http://gitref.org/)
+## Examples
 
-At least, you shall configure the following variables
+All customization / installation instructions are better described in the sample PDF produced using this theme:
 
-       $> git config --global user.name "Your Name Comes Here"
-       $> git config --global user.email you@yourdomain.example.com
-       # configure colors
-       $> git config --global color.diff auto
-       $> git config --global color.status auto
-       $> git config --global color.branch auto
+* a [Minimal](examples/minimal.pdf) example -- [sources]((examples/minimal/) 
+* a [more complete](examples/advanced.pdf) example with usage instructions -- [sources](examples/advanced/)
+* you can (who said should?) at least try to combine it with [markdown](http://daringfireball.net/projects/markdown/).
+   - an [example based on markdown](examples/markdown.pdf) is also provided -- [sources](examples/markdown/)
 
-Note that you can create git command aliases in `~/.gitconfig` as follows: 
+## Markdown-based Beamer Workflow
 
-       [alias]
-           up = pull origin
-           pu = push origin
-           st = status
-           df = diff
-           ci = commit -s
-           br = branch
-           w  = whatchanged --abbrev-commit
-           ls = ls-files
-           gr = log --graph --oneline --decorate
-           amend = commit --amend
+* Install [pandoc](http://pandoc.org/)
+* Rely on my [LaTeX Makefile](https://github.com/Falkor/Makefiles/blob/devel/latex/Makefile) (or define your own)
+* Rely on a main file in LaTeX
+    - split markdown content in individual Markdown files
+    - these file **SHOULD HAVE** the `.md` extension
+	- my `Makefile` compile all `.md` files into `.md.tex` LaTeX files using:
 
-Consider my personal [`.gitconfig`](https://github.com/Falkor/dotfiles/blob/master/git/.gitconfig) as an example -- if you decide to use it, simply copy it in your home directory and adapt the `[user]` section. 
+            pandoc –from markdown –to beamer –slide-level 3 -o <filename>.md.tex <filename>.md
+
+* Simply include the markdown files using `\input{<filename>.md}`
+    - in practice, `<filename>.md.tex` is considered for inclusion since the `.tex` extension is automatically appended.
+
+You can see a concrete example in [`examples/markdown/`](examples/markdown).
+In particular, you might consider the [markdown file](examples/markdown/_content_in_markdown.md) used to produce the slides.
+
+## Contributing
 
 ### [Git-flow](https://github.com/nvie/gitflow)
 
-The Git branching model for this repository follows the guidelines of
-[gitflow](http://nvie.com/posts/a-successful-git-branching-model/).
+The Git branching model for this repository follows the guidelines of [gitflow](http://nvie.com/posts/a-successful-git-branching-model/).
 In particular, the central repository holds two main branches with an infinite lifetime:
 
 * `production`: the *production-ready* branch
@@ -125,7 +128,7 @@ it will finish the release using `git-flow`, create the appropriate tag in the `
 
 This project is released under the terms of the [CC by-nc-sa](LICENCE) licence. 
 
-[![Licence](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0)
+[![LICENCE](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0)
 
 ## Contributing
 
