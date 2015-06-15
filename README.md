@@ -56,7 +56,7 @@ You probably want to use [my own LaTeX Makefile](https://github.com/Falkor/Makef
 
 All customization / installation instructions are better described in the sample PDF produced using this theme:
 
-* a [Minimal](examples/minimal.pdf) example -- [sources]((examples/minimal/) 
+* a [Minimal](examples/minimal.pdf) example -- [sources](examples/minimal/) 
 * a [more complete](examples/advanced.pdf) example with usage instructions -- [sources](examples/advanced/)
 * you can (who said should?) at least try to combine it with [markdown](http://daringfireball.net/projects/markdown/).
    - an [example based on markdown](examples/markdown.pdf) is also provided -- [sources](examples/markdown/)
