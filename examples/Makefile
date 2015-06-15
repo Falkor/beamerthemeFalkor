@@ -1,6 +1,6 @@
 ################################################################################
 # Makefile - Configuration file for GNU make (http://www.gnu.org/software/make/)
-# Time-stamp: <Mon 2015-06-15 12:31 svarrette>
+# Time-stamp: <Mon 2015-06-15 12:35 svarrette>
 #
 # Copyright (c) 2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 #
@@ -27,8 +27,8 @@ release_clean:
 	rm -i $(notdir $(TARGET))
 
 test:
-	@echo "SRCDIR     = $(SRCDIR)"
-	@echo "TARGET   = $(TARGET)"
+	@echo "SRCDIR = $(SRCDIR)"
+	@echo "TARGET = $(TARGET)"
 
 %:
 	@for d in $(SRCDIR); do \
