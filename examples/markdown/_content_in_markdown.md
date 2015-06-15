@@ -192,11 +192,11 @@ Text on the right column
 
 \columnsend
 
-### More on Columns
+### Columns w. blocks w. Markdown inside
 
 \columnsbegin{.5\textwidth}
 
-\blockbegin{~\\A First Block} <!-- It's not a bug, it's a feature ;) -->
+\blockbegin{A Block in A Column}
 
 * item 1
 * item 2
@@ -209,18 +209,21 @@ Text on the right column
 
 \column{.5\textwidth}
 
-Unfortunately in a column environment, you need to use the following commands: 
+Inside a column environment:
 
-```
+* the `block` environment raise an error
+* instead, use the following commands: 
+
+~~~latex
 \blockbegin{Title}
   ...
 \blockend
-```
-
-Inside you can use the Markdown syntax.
+~~~
 
 \columnsend
 
+* This allows to use the Markdown syntax **in** the block.
+    - only required with the `\columnsbegin ... \columnsend` construction 
 
 
 ### Links

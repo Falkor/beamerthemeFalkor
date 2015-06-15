@@ -1,6 +1,6 @@
 ################################################################################
 # Makefile - Configuration file for GNU make (http://www.gnu.org/software/make/)
-# Time-stamp: <Mon 2015-06-15 12:43 svarrette>
+# Time-stamp: <Mon 2015-06-15 12:57 svarrette>
 #
 # Copyright (c) 2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 #
@@ -20,7 +20,7 @@ all:
 release: all
 	@for f in $(TARGET); do \
 		echo "==> releasing '$$f' in the current directory"; \
-		cp $$f .; \
+		rsync -avzu $$f .; \
 	done
 
 release_clean: clean
