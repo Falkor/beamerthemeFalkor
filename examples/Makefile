@@ -1,6 +1,6 @@
 ################################################################################
 # Makefile - Configuration file for GNU make (http://www.gnu.org/software/make/)
-# Time-stamp: <Mon 2015-06-15 12:35 svarrette>
+# Time-stamp: <Mon 2015-06-15 12:43 svarrette>
 #
 # Copyright (c) 2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 #
@@ -23,7 +23,7 @@ release: all
 		cp $$f .; \
 	done
 
-release_clean:
+release_clean: clean
 	rm -i $(notdir $(TARGET))
 
 test:
