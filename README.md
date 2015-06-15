@@ -76,7 +76,7 @@ All customization / installation instructions are better described in the sample
     - in practice, `<filename>.md.tex` is considered for inclusion since the `.tex` extension is automatically appended.
 
 You can see a concrete example in [`examples/markdown/`](examples/markdown).
-In particular, you might consider the [markdown file](examples/markdown/_content_in_markdown.md) used to produce the slides.
+In particular, you might consider the [markdown file](examples/markdown/_content_in_markdown.md) used to produce the slides (see also the [raw markdown version](https://raw.githubusercontent.com/Falkor/beamerthemeFalkor/master/examples/markdown/_content_in_markdown.md))
 
 ## Contributing
 
