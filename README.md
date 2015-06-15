@@ -1,8 +1,8 @@
 -*- mode: markdown; mode: visual-line; fill-column: 80 -*-
 
-[![Licence](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Licence](https://img.shields.io/badge/license-CC by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)
 
-       Time-stamp: <Sat 2015-06-13 20:03 svarrette>
+       Time-stamp: <Dim 2015-03-29 14:28 svarrette>
 
          _                                    _   _                         ______    _ _              
         | |                                  | | | |                       |  ____|  | | |             
@@ -15,7 +15,7 @@
        Copyright (c) 2015 Sebastien Varrette <sebastien.varrette@uni.lu>
 
 My personal LaTeX Beamer theme
-* [GPL-3.0 Licence](http://www.gnu.org/licenses/gpl-3.0.html)
+* [CC by-nc-sa Licence](http://creativecommons.org/licenses/by-nc-sa/4.0)
 * [Sources](https://github.com/Falkor/beamerthemeFalkor)
 
 ## Synopsis
@@ -123,9 +123,9 @@ it will finish the release using `git-flow`, create the appropriate tag in the `
 
 ## Licence
 
-This project is released under the terms of the [GPL-3.0](LICENCE) licence. 
+This project is released under the terms of the [CC by-nc-sa](LICENCE) licence. 
 
-[![Licence](https://www.gnu.org/graphics/gplv3-88x31.png)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Licence](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0)
 
 ## Contributing
 
