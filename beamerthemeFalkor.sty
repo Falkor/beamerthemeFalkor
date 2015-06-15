@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Sun 2015-06-14 00:14 svarrette>
+% Time-stamp: <Mon 2015-06-15 10:13 svarrette>
 %
 % .            Copyright (c) 2009 Sebastien Varrette. 
 %
@@ -578,7 +578,7 @@ leftmargin\romannumeral\@ld \endcsname
       \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] { 
         \pgfuseimage{logo}
       };
-      \draw (2.3cm, 0.4cm) node [anchor=mid] {\color{bg!30!fg}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}};
+      \draw (0.1cm, 0.4cm) node [anchor=west] {\color{bg!30!fg}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}};
       \draw (\progressbar@titlerectangle, 0.21cm) node [anchor=south east] {\color{structure}\insertshorttitle};
       \draw[fg!30!bg, <->, >=serif cm] (\progressbar@leftbar, 0.21cm) -- (\progressbar@titlerectangle, 0.21cm);
       \draw (\progressbar@currentbarlength, 0.21cm)
@@ -844,7 +844,6 @@ leftmargin\romannumeral\@ld \endcsname
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% Additionnal config %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-
 
 \setbeamertemplate{navigation symbols}{}
 
