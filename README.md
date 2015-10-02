@@ -139,3 +139,9 @@ That's quite simple:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new [Pull Request](https://help.github.com/articles/using-pull-requests/)
+
+## Acknowledgements
+
+* Sylvain Bouveret for the initial [progressbar](http://recherche.noiraudes.net/fr/LaTeX.php) beamer theme
+* Jakub Muszynski for the updates and correction he found when designing his own PhD. defense
+* Xavier Besseron and Joseph Emeras for motivating me to investigate the Markdown path and raising (as always) good ideas.
