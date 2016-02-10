@@ -3,7 +3,7 @@
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
 % Time-stamp: <Mon 2015-06-15 11:42 svarrette>
 %
-% .            Copyright (c) 2009 Sebastien Varrette. 
+% .            Copyright (c) 2009 Sebastien Varrette.
 %
 % Licence: Creative Commons Attribution-Noncommercial-Share Alike 2.0 France
 %
@@ -14,33 +14,33 @@
 % Under the following conditions:
 %   - Attribution : You must attribute the work in the manner specified by the
 %                   author or licensor (but  not in any way that suggests that
-%                   they endorse you or your use of the work).  
+%                   they endorse you or your use of the work).
 %   - Noncommercial:  You may not use this work for commercial purposes.
 %   - Share Alike: If you alter, transform, or build upon this work, you may
 %                  distribute the resulting work only under the same or similar
-%                  license to this one. 
+%                  license to this one.
 %
 % With the understanding that:
 %   - Waiver: Any of the above conditions can be waived if you get permission
-%             from the copyright holder. 
+%             from the copyright holder.
 %   - Other Rights: In no way are any of the following rights affected by the
-%                   license:  
+%                   license:
 %                    * Your fair dealing or fair use rights;
 %                    * Apart from the remix rights granted under this license,
-%                      the author's moral rights; 
+%                      the author's moral rights;
 %                     * Rights other persons may have either in the work itself
 %                       or in how the work is used, such as publicity or privacy
-%                       rights. 
+%                       rights.
 %   - Notice:  For any reuse or distribution, you must make clear to others the
 %              license terms of this work. The best way to do this is with a
-%              link to this web page. 
+%              link to this web page.
 %=============================================================================
-% Note: to use this theme, add the following to you main document: 
+% Note: to use this theme, add the following to you main document:
 %       \usetheme{Falkor}
 %
 % also, make the link slide_image.jpg point to the image you would like to see
 % on each slides.
-% 
+%
 % Latest version of this file can be found on Github:
 %      https://github.com/Falkor/beamerthemeFalkor
 %
@@ -65,9 +65,9 @@
 \RequirePackage{fancyvrb}
 \RequirePackage{tcolorbox}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Color settings %%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 
 \definecolor{progressbar@bgyellow}{rgb}{0.95,0.95,0.85}
@@ -118,18 +118,18 @@
 
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Inner config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{tikz}
 \usetikzlibrary{fadings}
 \RequirePackage{ifthen}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Processing options...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \def\progressbar@headline{none}%
@@ -163,16 +163,16 @@
 \newboolean{@twopt} \setboolean{@twopt}{false}
 \newcommand*{\twoptoff}{\ifnum \catcode`\;=13 \catcode`\;=12 \setboolean{@twopt}{true} \fi}
 \newcommand*{\twopton}{\if@twopt \catcode`\;=13 \setboolean{@twopt}{false}  \fi}
-% 
-% 
+%
+%
 
 \mode<presentation>
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Bibliography...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\biblio}[1]{
   \begin{center}
@@ -222,11 +222,11 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Blocks...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{changepage}
 
@@ -237,7 +237,7 @@
 % The ultimate trick to prevent the itemize-inside-blocks bug from happening...
 \let\progressbar@tempitemize=\itemize
 \def\progressbar@itemize{\ifhmode\else\vskip-0.25\topsep\fi\progressbar@tempitemize}
-% 
+%
 
 %%% Bruno's factorized version begins %%%
 
@@ -277,11 +277,11 @@
 \defblock[example]
 \defblock[alerted]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Frame title...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\progressbar@separator{--}
 
@@ -321,11 +321,11 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Items...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\setlistspacing}[2]{\def\@ld{#1}\expandafter\def\csname
 @list\romannumeral\@ld \endcsname{\leftmargin\csname
 leftmargin\romannumeral\@ld \endcsname
@@ -370,7 +370,7 @@ leftmargin\romannumeral\@ld \endcsname
  	% \settototalheight\posCorrection{yX}%
  	% \begin{tikzpicture}[baseline=-0.3\posCorrection]\node [draw=fg!50!black!90!bg, inner sep=0.7pt, shading=ball,circle, ball color=fg!80!white] {\color{bg}\contour{fg!50!black!90!bg}{\footnotesize\bf\insertenumlabel}};\end{tikzpicture}%
  }
-  
+
 \normalsize
 \pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
 {%
@@ -414,9 +414,9 @@ leftmargin\romannumeral\@ld \endcsname
 <all>
 
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Font config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{xspace}
 
@@ -455,9 +455,9 @@ leftmargin\romannumeral\@ld \endcsname
 <all>
 
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Outer config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{tikz}
 \usetikzlibrary{arrows}
@@ -465,11 +465,11 @@ leftmargin\romannumeral\@ld \endcsname
 \makeatletter
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Processing options...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
@@ -495,11 +495,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Some color definitions...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setbeamercolor{progressbar primary}{parent=palette primary}
 \setbeamercolor{progressbar secondary}{parent=palette secondary}
@@ -507,11 +507,11 @@ leftmargin\romannumeral\@ld \endcsname
 \setbeamercolor{progressbar quaternary}{parent=palette quaternary}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Some computations dedicated to the progressbar...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newdimen\progressbar@currentbarlength
 \newdimen\progressbar@framenumberrectangle
@@ -574,11 +574,11 @@ leftmargin\romannumeral\@ld \endcsname
       %\fill [black!5] (0,0) rectangle (\paperwidth,0.7cm);
       \useasboundingbox (0, 0) rectangle  (\paperwidth, 0.6cm);
       \draw (\progressbar@framenumberrectangle, 0.21cm) node (stats) [anchor=mid] {\color{structure}\insertframenumber~/~\insertintermediateframenumber};
-      
-      % \node (logo_ul)[anchor=south, inner sep=1em] at (current page.south) { 
+
+      % \node (logo_ul)[anchor=south, inner sep=1em] at (current page.south) {
       %     \includegraphics[width=\paperwidth]{UL-bottom.png}
       % };
-      \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] { 
+      \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] {
         \pgfuseimage{logo}
       };
       \draw (0.1cm, 0.4cm) node [anchor=west] {\color{bg!30!fg}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}};
@@ -599,11 +599,11 @@ leftmargin\romannumeral\@ld \endcsname
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Definition of the customized templates...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mode<presentation>
 
@@ -644,11 +644,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Headline...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \setbeamertemplate{headline}
@@ -667,11 +667,11 @@ leftmargin\romannumeral\@ld \endcsname
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Footline...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \defbeamertemplate*{footline}{progressbar theme}{
   \begin{beamercolorbox}[wd=\paperwidth,ht=1cm,dp=0ex]{structure.fg}%
@@ -681,11 +681,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Title page...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \RequirePackage{textpos}
 
 % \pgfdeclareimage[width=\paperwidth]{ullogo}{UL-bottom2.png}
@@ -789,11 +789,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-%   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %   Background...
-%   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \defbeamertemplate*{background canvas}{progressbar theme}{\pgfuseshading{background shading}}%
 
@@ -842,7 +842,7 @@ leftmargin\romannumeral\@ld \endcsname
 
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Markdown / Pandoc Specific %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{longtable}
@@ -875,6 +875,8 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\RegionMarkerTok}[1]{{#1}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % Hacks for columns / blocks
 \newcommand{\columnsbegin}[1]{\begin{columns}[t]%
@@ -885,9 +887,9 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\blockend}{\end{block}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Additionnal config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -904,14 +906,14 @@ leftmargin\romannumeral\@ld \endcsname
 
 \renewcommand{\appendix}[1][0void0]
 {
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % This piece of code is supposed to introduce a bias in the
   % number of slides
   \makeatletter
   \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\def\noexpand\insertintermediateframenumber{\the\c@framenumber}}}}
   \renewcommand{\insertintermediateframenumber}{\inserttotalframenumber}
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \def\tmparg{#1}
   \def\tmpargref{0void0}
@@ -925,7 +927,7 @@ leftmargin\romannumeral\@ld \endcsname
   \end{frame}
   \fi
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % We recompute the progressbar step and the current position
 
   \progressbar@numer=1
@@ -936,7 +938,7 @@ leftmargin\romannumeral\@ld \endcsname
   \ifnum\progressbar@denom=0\else\divide\progressbar@tmpresult by \progressbar@denom\fi
   \global\progressbar@stepbar=\progressbar@tmpresult
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \makeatother
 }
@@ -999,8 +1001,3 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\cbegin}[1]{\columnsbegin{#1}}
 \newcommand{\cend}{\columnsend}
 \newcommand{\cmd}[1]{\begin{cmdline}\cmdlineentry{#1}\end{cmdline}}
-
-
-
-
-
