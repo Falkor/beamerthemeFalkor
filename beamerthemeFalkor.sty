@@ -981,6 +981,40 @@ leftmargin\romannumeral\@ld \endcsname
   urlcolor=progressbar@fgblue
 }
 
+% Piechart helper -- adapted from http://www.texample.net/tikz/examples/pie-chart-color/
+% Usage: \piechart{<scale>}{pourcent1/label1,pourcent2/label2,...,pourcentX/labelX}
+\newcommand{\piechart}[2]{
+  \begin{tikzpicture}[nodes = {font=\sffamily},scale=#1, every node/.style={scale=#1}]
+    \def\angle{0}
+    \def\radius{3}
+    \def\cyclelist{{"teal","orange","cyan","lightgray","olive","red"}}
+    \newcount\cyclecount \cyclecount=-1
+    \newcount\ind \ind=-1
+    \foreach \percent/\name in {
+     #2
+    } {
+      \ifx\percent\empty\else               % If \percent is empty, do nothing
+      \global\advance\cyclecount by 1     % Advance cyclecount
+      \global\advance\ind by 1            % Advance list index
+      \ifnum6<\cyclecount                 % If cyclecount is larger than list
+      \global\cyclecount=0              %   reset cyclecount and
+      \global\ind=0                     %   reset list index
+      \fi
+      \pgfmathparse{\cyclelist[\the\ind]} % Get color from cycle list
+      \edef\color{\pgfmathresult}         %   and store as \color
+      % Draw angle and set labels
+      \draw[fill={\color!50},draw={\color}] (0,0) -- (\angle:\radius)
+      arc (\angle:\angle+\percent*3.6:\radius) -- cycle;
+      \node at (\angle+0.5*\percent*3.6:0.7*\radius) {\percent\,\%};
+      \node[pin=\angle+0.5*\percent*3.6:\name]
+      at (\angle+0.5*\percent*3.6:\radius) {};
+      \pgfmathparse{\angle+\percent*3.6}  % Advance angle
+      \xdef\angle{\pgfmathresult}         %   and store in \angle
+      \fi
+    };
+  \end{tikzpicture}
+}
+
 % Markdown helpers
 \newcommand{\bbegin}[1]{\begin{block}{#1}}
 \newcommand{\bend}{\end{block}}
