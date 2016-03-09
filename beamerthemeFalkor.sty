@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Wed 2016-02-10 21:55 svarrette>
+% Time-stamp: <Wed 2016-03-09 12:14 svarrette>
 %
 % .            Copyright (c) 2009-2016 Sebastien Varrette.
 %
@@ -1016,27 +1016,62 @@ leftmargin\romannumeral\@ld \endcsname
 }
 
 % Markdown helpers
+% Usage: (mnemotechnic: b = block, ex = example, w = warning/alert)
+% \{b|ex|w}begin{<title>}
+%
+%  text in markdown
+%
+% \{b|ex|w}end
 \newcommand{\bbegin}[1]{\begin{block}{#1}}
 \newcommand{\bend}{\end{block}}
 \newcommand{\exbegin}[1]{\begin{exampleblock}{#1}}
 \newcommand{\exend}{\end{exampleblock}}
 \newcommand{\wbegin}[1]{\begin{alertblock}{#1}}
 \newcommand{\wend}{\end{alertblock}}
+% Quick shortcuts
 \newcommand{\warn}[2]{\begin{alertblock}{#1}#2\end{alertblock}}
 \newcommand{\ex}[2]{\begin{exampleblock}{#1}#2\end{exampleblock}}
 \newcommand{\toyou}[1]{\ex{}{\centering Your Turn! #1}}
+% nice box to display commands
 \newcommand{\command}[1]{\begin{tcolorbox}[colback=black!5!white,colframe=white!75!black,leftrule=3mm]\cmdlineentry{\scriptsize #1}\end{tcolorbox}}
-% only<> and uncover<> are badly supported with pandoc parser (because of '<' and '>'), so
+
+% Blue box with white text inside
+% Usage: \bluebox{<width>}{<text>}
+\newcommand{\bluebox}[2]{\begin{tcolorbox}[width=#1,colback=progressbar@fgblue!50!white,colframe=progressbar@fgblue!50!white]\centering\color{white}#2\end{tcolorbox}}
+% Gray box, with title
+% Usage:
+% \gbegin{<width>}{<title>}
+%
+%  text in markdown
+%
+% \gend
+\newcommand{\gbegin}[2]{\begin{tcolorbox}[width=#1,colback=black!5!white,colframe=white!75!black,title=#2]\centering}
+\newcommand{\gend}{\end{tcolorbox}}
+
+% \only<> and \uncover<> are badly supported with pandoc parser (because of '<' and '>'), so
 % I redefine here some wrapper that would pass the parser
 \newcommand{\just}[2]{\only<#1>{#2}}
 \newcommand{\reveal}[2]{\uncover<#1>{#2}}
-
 \newcommand{\vbegin}[1]{\begin{onlyenv}<#1>}
 \newcommand{\vend}{\end{onlyenv}}
 \newcommand{\rbegin}[1]{\begin{uncoverenv}<#1>}
 \newcommand{\rend}{\end{uncoverenv}}
+
+% helper to images
 \newcommand{\transientimg}[3]{\only<#1>{\includegraphics[#2]{#3}}}
 
+% easiest column (c) management.
+% Usage:
+% \cbegin{<width>}
+%
+%  text in markdown
+%
+% \column{<width>}
+%
+%  Text in markdown
+%
+% \cend
 \newcommand{\cbegin}[1]{\columnsbegin{#1}}
 \newcommand{\cend}{\columnsend}
+
 \newcommand{\cmd}[1]{\begin{cmdline}\cmdlineentry{#1}\end{cmdline}}
