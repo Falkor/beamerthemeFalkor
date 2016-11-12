@@ -83,6 +83,11 @@ In particular, you might consider the [markdown file](examples/markdown/_content
 A set of simple tests based on [Bats](https://github.com/sstephenson/bats): "Bash Automated Testing System" are proposed on the `tests/` directory, and served to validate that this theme permits a successful compilation of the sample slides proposed on the `examples/` directory.
 For more information, see [tests/README.md](tests/README.md).
 
+You can run these tests by issuing:
+
+```bash
+     make tests # OR make bats OR make test
+```
 ## Contributing
 
 ### [Git-flow](https://github.com/nvie/gitflow)
