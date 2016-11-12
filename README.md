@@ -1,6 +1,6 @@
 -*- mode: markdown; mode: visual-line; -*-
 
-[![Licence](https://img.shields.io/badge/license-CC by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)
+[![Licence](https://img.shields.io/badge/license-CC by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)[![Build Status](https://travis-ci.org/Falkor/beamerthemeFalkor.svg?branch=master)](https://travis-ci.org/Falkor/beamerthemeFalkor)
 
                  _____     _ _                ____
                 |  ___|_ _| | | _____  _ __  | __ )  ___  __ _ _ __ ___   ___ _ __
@@ -14,24 +14,24 @@
                                    | | | | | |  __/ | | | | |  __/
                                    |_| |_| |_|\___|_| |_| |_|\___|
 
-                  Copyright (c) 2015 Sebastien Varrette <sebastien.varrette@uni.lu>
+                  Copyright (c) 2015-2016 Sebastien Varrette <sebastien.varrette@uni.lu>
 
 | [Project Page](https://github.com/Falkor/beamerthemeFalkor) | [Sources](https://github.com/Falkor/beamerthemeFalkor) |              [Issues](https://github.com/Falkor/beamerthemeFalkor/issues) |
 
 ## Synopsis
 
-My personal LaTeX Beamer theme, provided in a working environment. 
+My personal LaTeX Beamer theme, provided in a working environment.
 
-This theme is largely based on the [progressbar](http://recherche.noiraudes.net/fr/LaTeX.php) beamer theme (by Sylvain Bouveret) with my own customization to fit my tastes. 
+This theme is largely based on the [progressbar](http://recherche.noiraudes.net/fr/LaTeX.php) beamer theme (by Sylvain Bouveret) with my own customization to fit my tastes.
 So feel free to send him a postal card (as he asks for ;) )
 
       Progressbar Version: 0.42 September 2010.
 
-## Installation 
+## Installation
 
-This repository is hosted on [Github](https://github.com/Falkor/beamerthemeFalkor). 
+This repository is hosted on [Github](https://github.com/Falkor/beamerthemeFalkor).
 
-**`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running: 
+**`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running:
 
     $> cd beamerthemefalkor
     $> make setup
@@ -50,13 +50,13 @@ Then you can copy the `beamerthemeFalkor.sty` in your own repository.
 \pgfdeclareimage[height=0.8cm]{logo}{logo_UL.pdf}
 ```
 
-You probably want to use [my own LaTeX Makefile](https://github.com/Falkor/Makefiles/blob/devel/latex/Makefile) combined with my generic [LaTeX style file](https://github.com/Falkor/Makefiles/blob/devel/latex/template-article-styles/_style.sty) as done in the [advanced example](examples/advanced) 
+You probably want to use [my own LaTeX Makefile](https://github.com/Falkor/Makefiles/blob/devel/latex/Makefile) combined with my generic [LaTeX style file](https://github.com/Falkor/Makefiles/blob/devel/latex/template-article-styles/_style.sty) as done in the [advanced example](examples/advanced)
 
 ## Examples
 
 All customization / installation instructions are better described in the sample PDF produced using this theme:
 
-* a [Minimal](examples/minimal.pdf) example -- [sources](examples/minimal/) 
+* a [Minimal](examples/minimal.pdf) example -- [sources](examples/minimal/)
 * a [more complete](examples/advanced.pdf) example with usage instructions -- [sources](examples/advanced/)
 * you can (who said should?) at least try to combine it with [markdown](http://daringfireball.net/projects/markdown/).
    - an [example based on markdown](examples/markdown.pdf) is also provided -- [sources](examples/markdown/)
@@ -77,6 +77,11 @@ All customization / installation instructions are better described in the sample
 
 You can see a concrete example in [`examples/markdown/`](examples/markdown).
 In particular, you might consider the [markdown file](examples/markdown/_content_in_markdown.md) used to produce the slides (see also the [raw markdown version](https://raw.githubusercontent.com/Falkor/beamerthemeFalkor/master/examples/markdown/_content_in_markdown.md))
+
+## Automatic Tests of Falkor/beamerthemeFalkor
+
+A set of simple tests based on [Bats](https://github.com/sstephenson/bats): "Bash Automated Testing System" are proposed on the `tests/` directory, and served to validate that this theme permits a successful compilation of the sample slides proposed on the `examples/` directory.
+For more information, see [tests/README.md](tests/README.md).
 
 ## Contributing
 
@@ -126,7 +131,7 @@ it will finish the release using `git-flow`, create the appropriate tag in the `
 
 ## Licence
 
-This project is released under the terms of the [CC by-nc-sa](LICENCE) licence. 
+This project is released under the terms of the [CC by-nc-sa](LICENCE) licence.
 
 [![LICENCE](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0)
 
