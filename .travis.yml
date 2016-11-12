@@ -13,6 +13,8 @@ addons:
     - build-essential
     - latex-beamer
     - texlive-latex-extra
+    - texlive-bibtex-extra
+    - texlive-fonts-recommended
     - pandoc
   hosts:
     - travis.dev
