@@ -1,9 +1,9 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Mon 2015-06-15 11:42 svarrette>
+% Time-stamp: <Wed 2016-03-09 12:14 svarrette>
 %
-% .            Copyright (c) 2009 Sebastien Varrette. 
+% .            Copyright (c) 2009-2016 Sebastien Varrette.
 %
 % Licence: Creative Commons Attribution-Noncommercial-Share Alike 2.0 France
 %
@@ -14,37 +14,37 @@
 % Under the following conditions:
 %   - Attribution : You must attribute the work in the manner specified by the
 %                   author or licensor (but  not in any way that suggests that
-%                   they endorse you or your use of the work).  
+%                   they endorse you or your use of the work).
 %   - Noncommercial:  You may not use this work for commercial purposes.
 %   - Share Alike: If you alter, transform, or build upon this work, you may
 %                  distribute the resulting work only under the same or similar
-%                  license to this one. 
+%                  license to this one.
 %
 % With the understanding that:
 %   - Waiver: Any of the above conditions can be waived if you get permission
-%             from the copyright holder. 
+%             from the copyright holder.
 %   - Other Rights: In no way are any of the following rights affected by the
-%                   license:  
+%                   license:
 %                    * Your fair dealing or fair use rights;
 %                    * Apart from the remix rights granted under this license,
-%                      the author's moral rights; 
+%                      the author's moral rights;
 %                     * Rights other persons may have either in the work itself
 %                       or in how the work is used, such as publicity or privacy
-%                       rights. 
+%                       rights.
 %   - Notice:  For any reuse or distribution, you must make clear to others the
 %              license terms of this work. The best way to do this is with a
-%              link to this web page. 
+%              link to this web page.
 %=============================================================================
-% Note: to use this theme, add the following to you main document: 
+% Note: to use this theme, add the following to you main document:
 %       \usetheme{Falkor}
 %
 % also, make the link slide_image.jpg point to the image you would like to see
 % on each slides.
-% 
+%
 % Latest version of this file can be found on Github:
 %      https://github.com/Falkor/beamerthemeFalkor
 %
-\ProvidesPackage{beamerthemeFalkor}[2015/06/11]
+\ProvidesPackage{beamerthemeFalkor}[2016/02/11]
 
 \def\beamer@Falkor@image{}
 \DeclareOptionBeamer{image}{\def\beamer@Falkor@image{#1}}
@@ -65,9 +65,9 @@
 \RequirePackage{fancyvrb}
 \RequirePackage{tcolorbox}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Color settings %%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 
 \definecolor{progressbar@bgyellow}{rgb}{0.95,0.95,0.85}
@@ -118,18 +118,18 @@
 
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Inner config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{tikz}
 \usetikzlibrary{fadings}
 \RequirePackage{ifthen}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Processing options...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \def\progressbar@headline{none}%
@@ -163,16 +163,16 @@
 \newboolean{@twopt} \setboolean{@twopt}{false}
 \newcommand*{\twoptoff}{\ifnum \catcode`\;=13 \catcode`\;=12 \setboolean{@twopt}{true} \fi}
 \newcommand*{\twopton}{\if@twopt \catcode`\;=13 \setboolean{@twopt}{false}  \fi}
-% 
-% 
+%
+%
 
 \mode<presentation>
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Bibliography...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\biblio}[1]{
   \begin{center}
@@ -222,11 +222,11 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Blocks...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{changepage}
 
@@ -237,7 +237,7 @@
 % The ultimate trick to prevent the itemize-inside-blocks bug from happening...
 \let\progressbar@tempitemize=\itemize
 \def\progressbar@itemize{\ifhmode\else\vskip-0.25\topsep\fi\progressbar@tempitemize}
-% 
+%
 
 %%% Bruno's factorized version begins %%%
 
@@ -277,11 +277,11 @@
 \defblock[example]
 \defblock[alerted]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Frame title...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\progressbar@separator{--}
 
@@ -321,11 +321,11 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Items...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\setlistspacing}[2]{\def\@ld{#1}\expandafter\def\csname
 @list\romannumeral\@ld \endcsname{\leftmargin\csname
 leftmargin\romannumeral\@ld \endcsname
@@ -370,7 +370,7 @@ leftmargin\romannumeral\@ld \endcsname
  	% \settototalheight\posCorrection{yX}%
  	% \begin{tikzpicture}[baseline=-0.3\posCorrection]\node [draw=fg!50!black!90!bg, inner sep=0.7pt, shading=ball,circle, ball color=fg!80!white] {\color{bg}\contour{fg!50!black!90!bg}{\footnotesize\bf\insertenumlabel}};\end{tikzpicture}%
  }
-  
+
 \normalsize
 \pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
 {%
@@ -414,9 +414,9 @@ leftmargin\romannumeral\@ld \endcsname
 <all>
 
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Font config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{xspace}
 
@@ -455,9 +455,9 @@ leftmargin\romannumeral\@ld \endcsname
 <all>
 
 
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Outer config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{tikz}
 \usetikzlibrary{arrows}
@@ -465,11 +465,11 @@ leftmargin\romannumeral\@ld \endcsname
 \makeatletter
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Processing options...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\progressbar@headline{none}%
 \def\progressbar@frametitle{picture-section}%
@@ -495,11 +495,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Some color definitions...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setbeamercolor{progressbar primary}{parent=palette primary}
 \setbeamercolor{progressbar secondary}{parent=palette secondary}
@@ -507,11 +507,11 @@ leftmargin\romannumeral\@ld \endcsname
 \setbeamercolor{progressbar quaternary}{parent=palette quaternary}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Some computations dedicated to the progressbar...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newdimen\progressbar@currentbarlength
 \newdimen\progressbar@framenumberrectangle
@@ -574,11 +574,11 @@ leftmargin\romannumeral\@ld \endcsname
       %\fill [black!5] (0,0) rectangle (\paperwidth,0.7cm);
       \useasboundingbox (0, 0) rectangle  (\paperwidth, 0.6cm);
       \draw (\progressbar@framenumberrectangle, 0.21cm) node (stats) [anchor=mid] {\color{structure}\insertframenumber~/~\insertintermediateframenumber};
-      
-      % \node (logo_ul)[anchor=south, inner sep=1em] at (current page.south) { 
+
+      % \node (logo_ul)[anchor=south, inner sep=1em] at (current page.south) {
       %     \includegraphics[width=\paperwidth]{UL-bottom.png}
       % };
-      \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] { 
+      \node (logo_ul)[rounded corners, anchor=south, inner sep=1em, above=-0.5em of stats] {
         \pgfuseimage{logo}
       };
       \draw (0.1cm, 0.4cm) node [anchor=west] {\color{bg!30!fg}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}};
@@ -599,11 +599,11 @@ leftmargin\romannumeral\@ld \endcsname
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Definition of the customized templates...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mode<presentation>
 
@@ -644,11 +644,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Headline...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \setbeamertemplate{headline}
@@ -667,11 +667,11 @@ leftmargin\romannumeral\@ld \endcsname
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Footline...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \defbeamertemplate*{footline}{progressbar theme}{
   \begin{beamercolorbox}[wd=\paperwidth,ht=1cm,dp=0ex]{structure.fg}%
@@ -681,11 +681,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Title page...
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \RequirePackage{textpos}
 
 % \pgfdeclareimage[width=\paperwidth]{ullogo}{UL-bottom2.png}
@@ -789,11 +789,11 @@ leftmargin\romannumeral\@ld \endcsname
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-%   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %   Background...
-%   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \defbeamertemplate*{background canvas}{progressbar theme}{\pgfuseshading{background shading}}%
 
@@ -842,7 +842,7 @@ leftmargin\romannumeral\@ld \endcsname
 
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Markdown / Pandoc Specific %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{longtable}
@@ -861,20 +861,42 @@ leftmargin\romannumeral\@ld \endcsname
 \definecolor{shadecolor}{RGB}{248,248,248}
 %\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newenvironment{Shaded}{\begin{tcolorbox}[colback=lightgray,boxrule=0.2pt]\scriptsize}{\end{tcolorbox}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+
+% FIXME pandoc expected commands when translating markdown to beamer
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
-\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % Hacks for columns / blocks
 \newcommand{\columnsbegin}[1]{\begin{columns}[t]%
@@ -885,9 +907,9 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\blockend}{\end{block}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Additionnal config %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -904,14 +926,14 @@ leftmargin\romannumeral\@ld \endcsname
 
 \renewcommand{\appendix}[1][0void0]
 {
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % This piece of code is supposed to introduce a bias in the
   % number of slides
   \makeatletter
   \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\def\noexpand\insertintermediateframenumber{\the\c@framenumber}}}}
   \renewcommand{\insertintermediateframenumber}{\inserttotalframenumber}
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \def\tmparg{#1}
   \def\tmpargref{0void0}
@@ -925,7 +947,7 @@ leftmargin\romannumeral\@ld \endcsname
   \end{frame}
   \fi
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % We recompute the progressbar step and the current position
 
   \progressbar@numer=1
@@ -936,7 +958,7 @@ leftmargin\romannumeral\@ld \endcsname
   \ifnum\progressbar@denom=0\else\divide\progressbar@tmpresult by \progressbar@denom\fi
   \global\progressbar@stepbar=\progressbar@tmpresult
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \makeatother
 }
@@ -944,9 +966,9 @@ leftmargin\romannumeral\@ld \endcsname
 
 %=== Citing stuff
 \newcommand{\blue}[1]{\textcolor{beamerblue}{#1}}
-\newcommand{\mycite}[1]{{\tiny[\textcolor{beamerblue}{#1}]}}
+\newcommand{\mycite}[1]{{\tiny[\textcolor{progressbar@fgblue}{#1}]}}
 \newcommand{\mycitew}[1]{{\tiny[#1]}}
-\newcommand{\source}[1]{{\tiny[\textcolor{beamerblue}{Source} : #1]}}
+\newcommand{\source}[1]{{\tiny[\textcolor{progressbar@fgblue}{Source} : #1]}}
 \newcommand{\myurl}[1]{{\tiny\url{#1}}}
 
 
@@ -965,7 +987,7 @@ leftmargin\romannumeral\@ld \endcsname
 \newenvironment{cmdline}
 {\vspace{-0.5em}\begin{flushleft}\begin{scriptsize}}
 {\end{scriptsize}\end{flushleft}\vspace{-0.5em}}
-\newcommand{\promptline}[2]{~~~~\textcolor{progressbar@fgblue}{\texttt{{\tiny #1\textnormal{\$>}}}} \texttt{#2}}
+\newcommand{\promptline}[2]{~~\textcolor{progressbar@fgblue}{\texttt{{\tiny #1\textnormal{\$>}}}} \texttt{#2}}
 \newcommand{\cmdlineentry}[1]{\promptline{}{#1}}
 
 \newenvironment{configfile}[1]
@@ -979,28 +1001,97 @@ leftmargin\romannumeral\@ld \endcsname
   urlcolor=progressbar@fgblue
 }
 
+% Piechart helper -- adapted from http://www.texample.net/tikz/examples/pie-chart-color/
+% Usage: \piechart{<scale>}{pourcent1/label1,pourcent2/label2,...,pourcentX/labelX}
+\newcommand{\piechart}[2]{
+  \begin{tikzpicture}[nodes = {font=\sffamily},scale=#1, every node/.style={scale=#1}]
+    \def\angle{0}
+    \def\radius{3}
+    \def\cyclelist{{"teal","orange","cyan","lightgray","olive","red"}}
+    \newcount\cyclecount \cyclecount=-1
+    \newcount\ind \ind=-1
+    \foreach \percent/\name in {
+     #2
+    } {
+      \ifx\percent\empty\else               % If \percent is empty, do nothing
+      \global\advance\cyclecount by 1     % Advance cyclecount
+      \global\advance\ind by 1            % Advance list index
+      \ifnum6<\cyclecount                 % If cyclecount is larger than list
+      \global\cyclecount=0              %   reset cyclecount and
+      \global\ind=0                     %   reset list index
+      \fi
+      \pgfmathparse{\cyclelist[\the\ind]} % Get color from cycle list
+      \edef\color{\pgfmathresult}         %   and store as \color
+      % Draw angle and set labels
+      \draw[fill={\color!50},draw={\color}] (0,0) -- (\angle:\radius)
+      arc (\angle:\angle+\percent*3.6:\radius) -- cycle;
+      \node at (\angle+0.5*\percent*3.6:0.7*\radius) {\percent\,\%};
+      \node[pin=\angle+0.5*\percent*3.6:\name]
+      at (\angle+0.5*\percent*3.6:\radius) {};
+      \pgfmathparse{\angle+\percent*3.6}  % Advance angle
+      \xdef\angle{\pgfmathresult}         %   and store in \angle
+      \fi
+    };
+  \end{tikzpicture}
+}
+
 % Markdown helpers
+% Usage: (mnemotechnic: b = block, ex = example, w = warning/alert)
+% \{b|ex|w}begin{<title>}
+%
+%  text in markdown
+%
+% \{b|ex|w}end
 \newcommand{\bbegin}[1]{\begin{block}{#1}}
 \newcommand{\bend}{\end{block}}
 \newcommand{\exbegin}[1]{\begin{exampleblock}{#1}}
 \newcommand{\exend}{\end{exampleblock}}
 \newcommand{\wbegin}[1]{\begin{alertblock}{#1}}
 \newcommand{\wend}{\end{alertblock}}
+% Quick shortcuts
 \newcommand{\warn}[2]{\begin{alertblock}{#1}#2\end{alertblock}}
 \newcommand{\ex}[2]{\begin{exampleblock}{#1}#2\end{exampleblock}}
 \newcommand{\toyou}[1]{\ex{}{\centering Your Turn! #1}}
+% nice box to display commands
 \newcommand{\command}[1]{\begin{tcolorbox}[colback=black!5!white,colframe=white!75!black,leftrule=3mm]\cmdlineentry{\scriptsize #1}\end{tcolorbox}}
-%\newcommand{\just}[2]{\only<#1>{#2}}
 
+% Blue box with white text inside
+% Usage: \bluebox{<width>}{<text>}
+\newcommand{\bluebox}[2]{\begin{tcolorbox}[width=#1,colback=progressbar@fgblue!50!white,colframe=progressbar@fgblue!50!white]\centering\color{white}#2\end{tcolorbox}}
+% Gray box, with title
+% Usage:
+% \gbegin{<width>}{<title>}
+%
+%  text in markdown
+%
+% \gend
+\newcommand{\gbegin}[2]{\begin{tcolorbox}[width=#1,colback=black!5!white,colframe=white!75!black,title=#2]\centering}
+\newcommand{\gend}{\end{tcolorbox}}
+
+% \only<> and \uncover<> are badly supported with pandoc parser (because of '<' and '>'), so
+% I redefine here some wrapper that would pass the parser
+\newcommand{\just}[2]{\only<#1>{#2}}
+\newcommand{\reveal}[2]{\uncover<#1>{#2}}
 \newcommand{\vbegin}[1]{\begin{onlyenv}<#1>}
 \newcommand{\vend}{\end{onlyenv}}
+\newcommand{\rbegin}[1]{\begin{uncoverenv}<#1>}
+\newcommand{\rend}{\end{uncoverenv}}
+
+% helper to images
 \newcommand{\transientimg}[3]{\only<#1>{\includegraphics[#2]{#3}}}
 
+% easiest column (c) management.
+% Usage:
+% \cbegin{<width>}
+%
+%  text in markdown
+%
+% \column{<width>}
+%
+%  Text in markdown
+%
+% \cend
 \newcommand{\cbegin}[1]{\columnsbegin{#1}}
 \newcommand{\cend}{\columnsend}
+
 \newcommand{\cmd}[1]{\begin{cmdline}\cmdlineentry{#1}\end{cmdline}}
-
-
-
-
-
