@@ -8,6 +8,11 @@ os:
 before_script:
   - source ./tests/setup_bats.sh
 addons:
+  apt:
+    packages:
+    - build-essential
+    - texlive-base
+    - pandoc
   hosts:
     - travis.dev
 env:
