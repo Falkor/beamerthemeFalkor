@@ -11,7 +11,7 @@ addons:
   apt:
     packages:
     - build-essential
-    - latex-beamer
+    - latex-beamer texlive-latex-extra
     - pandoc
   hosts:
     - travis.dev
