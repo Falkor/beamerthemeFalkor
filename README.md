@@ -88,7 +88,10 @@ You can run these tests by issuing:
 ```bash
      make tests # OR make bats OR make test
 ```
-## Contributing
+## Developments Aspects
+
+If you wish to contribute directly to this repository and its content, you
+should be aware of the development workflow I follow for this repository
 
 ### [Git-flow](https://github.com/nvie/gitflow)
 
