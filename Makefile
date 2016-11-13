@@ -33,7 +33,7 @@ GITFLOW_BR_DEVELOP=master
 CURRENT_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 GIT_REMOTES    = $(shell git remote | xargs echo )
 GIT_DIRTY      = $(shell git diff --shortstat 2> /dev/null | tail -n1 )
-# Git subtrees repositories 
+# Git subtrees repositories
 # Format: '<url>[|<branch>]' - don't forget the quotes. if branch is ignored, 'master' is used
 #GIT_SUBTREE_REPOS = 'https://github.com/ULHPC/easybuild-framework.git|develop'  \
 					 'https://github.com/hpcugent/easybuild-wiki.git'
@@ -46,7 +46,7 @@ VERSION  = $(shell [ -f VERSION ] && head VERSION || echo "0.0.1")
 MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
 MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
-# total number of commits 		
+# total number of commits
 BUILD      = $(shell git log --oneline | wc -l | sed -e "s/[ \t]*//g")
 
 #REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
@@ -62,7 +62,7 @@ TARGETS =
 LOCAL_MAKEFILE = .Makefile.local
 
 ### Main variables
-.PHONY: all archive clean fetch help release setup start_bump_major start_bump_minor start_bump_patch subtree_setup subtree_up subtree_diff test upgrade versioninfo 
+.PHONY: all archive clean fetch help release setup start_bump_major start_bump_minor start_bump_patch subtree_setup subtree_up subtree_diff test upgrade versioninfo
 
 ############################### Now starting rules ################################
 # Load local settings, if existing (to override variable eventually)
@@ -70,11 +70,11 @@ ifneq (,$(wildcard $(LOCAL_MAKEFILE)))
 include $(LOCAL_MAKEFILE)
 endif
 
-# Required rule : what's to be done each time 
+# Required rule : what's to be done each time
 all: $(TARGETS)
 
-# Test values of variables - for debug purposes  
-test:
+# Test values of variables - for debug purposes
+info:
 	@echo "--- Compilation commands --- "
 	@echo "HAS_GITFLOW      -> '$(HAS_GITFLOW)'"
 	@echo "--- Directories --- "
@@ -105,7 +105,7 @@ setup:
 	git config gitflow.prefix.hotfix     hotfix/
 	git config gitflow.prefix.support    support/
 	git config gitflow.prefix.versiontag $(TAG_PREFIX)
-	$(MAKE) update 
+	$(MAKE) update
 	$(if $(GIT_SUBTREE_REPOS), $(MAKE) subtree_setup)
 
 fetch:
@@ -120,9 +120,9 @@ versioninfo:
 	@echo "next minor version: $(NEXT_MINOR_VERSION)"
 	@echo "next patch version: $(NEXT_PATCH_VERSION)"
 
-### Git flow management - this should be factorized 
+### Git flow management - this should be factorized
 ifeq ($(HAS_GITFLOW),)
-start_bump_patch start_bump_minor start_bump_major release: 
+start_bump_patch start_bump_minor start_bump_major release:
 	@echo "Unable to find git-flow on your system. "
 	@echo "See https://github.com/nvie/gitflow for installation details"
 else
@@ -153,7 +153,7 @@ start_bump_major: clean
 	@echo "=> remember to update the version number in $(MAIN_TEX)"
 	@echo "=> run 'make release' once you finished the bump"
 
-release: clean 
+release: clean
 	git flow release finish -s $(VERSION)
 	git checkout $(GITFLOW_BR_MASTER)
 	git push origin
@@ -174,7 +174,7 @@ upgrade: update
 	done
 
 
-### Git subtree management 
+### Git subtree management
 ifeq ($(GIT_SUBTREE_REPOS),)
 subtree_setup subtree_diff subtree_up:
 	@echo "no repository configured in GIT_SUBTREE_REPOS..."
@@ -200,7 +200,7 @@ subtree_diff:
 		git diff $${repo}/$$br $(CURRENT_BRANCH):$$path; \
 	done
 
-subtree_up: 
+subtree_up:
 	$(if $(GIT_DIRTY), $(error "Unable to pull subtree(s): Dirty Git repository"))
 	@for elem in $(GIT_SUBTREE_REPOS); do \
 		url=`echo $$elem | cut -d '|' -f 1`; \
@@ -245,4 +245,3 @@ help :
 	@echo '|               git-flow at a given level (major, minor or patch bump) |'
 	@echo '| make release: Finalize the release using git-flow                    |'
 	@echo '+----------------------------------------------------------------------+'
-

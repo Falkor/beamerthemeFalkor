@@ -1,4 +1,18 @@
+BATS=$(shell which bats 2>/dev/null)
+
+.PHONY: bats test tests
+
 # Local custolization for the Makefile
 all:
 	$(MAKE) -C examples/
 
+# BATS based tests
+ifeq ($(BATS),)
+bats test tests:
+	@echo "the Unit tests of Falkor's beamer theme rely on Bats which does not seem to be present on your system"
+	@echo "See https://github.com/sstephenson/bats for details"
+	@echo "installation notes can be found in tests/setup_bats.sh"
+else
+bats test tests:
+	$(BATS) tests
+endif
