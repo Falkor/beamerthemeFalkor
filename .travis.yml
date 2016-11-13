@@ -7,8 +7,6 @@ os:
 #  - osx
 # before_install:
 #   - tlmgr install tcolorbox
-before_script:
-  - source ./tests/setup_bats.sh
 addons:
   apt:
     packages:
@@ -30,7 +28,8 @@ addons:
 env:
   global:
     - TEXMFLOCAL=/tmp/texmf/
-before install:
+before_script:
+  - source ./tests/setup_bats.sh
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
   - mkdir -p $TEXMFLOCAL/tex/latex/
