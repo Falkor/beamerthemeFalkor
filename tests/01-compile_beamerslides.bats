@@ -1,7 +1,7 @@
 #! /usr/bin/env bats
 ################################################################################
 # 01-compile_beamerslides.bats
-# Time-stamp: <Thu 2016-03-03 22:33 svarrette>
+# Time-stamp: <Sat 2016-11-12 18:08 svarrette>
 #
 # Bats: Bash Automated Testing System -- https://github.com/sstephenson/bats
 # Installation: see README.md and setup_bats.sh
@@ -31,37 +31,45 @@ PDF_MARKDOWN="${SRCDIR_MARKDOWN}/markdown.pdf"
 PDF_ADVANCED="${SRCDIR_ADVANCED}/advanced.pdf"
 
 print_info() {
-  echo "SLIDES_ROOTDIR  = ${SLIDES_ROOTDIR}"
-  echo "SRCDIR_MINIMAL  = ${SRCDIR_MINIMAL}"
-  echo "SRCDIR_MARKDOWN = ${SRCDIR_MARKDOWN}"
-  echo "SRCDIR_ADVANCED = ${SRCDIR_ADVANCED}"
-  echo "PDF_MINIMAL     = ${PDF_MINIMAL}"
-  echo "PDF_MARKDOWN    = ${PDF_MARKDOWN}"
-  echo "PDF_ADVANCED    = ${PDF_ADVANCED}"
+    echo "SLIDES_ROOTDIR  = ${SLIDES_ROOTDIR}"
+    echo "SRCDIR_MINIMAL  = ${SRCDIR_MINIMAL}"
+    echo "SRCDIR_MARKDOWN = ${SRCDIR_MARKDOWN}"
+    echo "SRCDIR_ADVANCED = ${SRCDIR_ADVANCED}"
+    echo "PDF_MINIMAL     = ${PDF_MINIMAL}"
+    echo "PDF_MARKDOWN    = ${PDF_MARKDOWN}"
+    echo "PDF_ADVANCED    = ${PDF_ADVANCED}"
+}
+
+setup() {
+    [ -z "`which pdflatex`" ] && skip || true
+    # The below one is a dirty way to detect crappy travis ubuntu/precise environment
+    # where the simplest way to install tcolorbox is through tlmgr... unfortunately
+    # not present on precise (but in 'texlive-base' starting trusty)
+    [ -z "`which tlmgr`"]     && skip || true
 }
 
 @test "preliminary or preventive clean" {
-  run make -C ${SLIDES_ROOTDIR} clean
-  assert_success
-  assert [ ! -f "${PDF_MINIMAL}"  ]
-  assert [ ! -f "${PDF_MARKDOWN}" ]
-  assert [ ! -f "${PDF_ADVANCED}" ]
+    run make -C ${SLIDES_ROOTDIR} clean
+    assert_success
+    assert [ ! -f "${PDF_MINIMAL}"  ]
+    assert [ ! -f "${PDF_MARKDOWN}" ]
+    assert [ ! -f "${PDF_ADVANCED}" ]
 }
 
 @test "compile minimal slides" {
-  run make -C ${SRCDIR_MINIMAL}
-  assert_success
-  assert [ -f "${PDF_MINIMAL}" ]
+    run make -C ${SRCDIR_MINIMAL}
+    assert_success
+    assert [ -f "${PDF_MINIMAL}" ]
 }
 
 @test "compile markdown-based slides (using pandoc)" {
-  run make -C ${SRCDIR_MARKDOWN}
-  assert_success
-  assert [ -f "${PDF_MARKDOWN}" ]
+    run make -C ${SRCDIR_MARKDOWN}
+    assert_success
+    assert [ -f "${PDF_MARKDOWN}" ]
 }
 
 @test "compile advanced slides" {
-  run make -C ${SRCDIR_ADVANCED}
-  assert_success
-  assert [ -f "${PDF_ADVANCED}" ]
+    run make -C ${SRCDIR_ADVANCED}
+    assert_success
+    assert [ -f "${PDF_ADVANCED}" ]
 }
