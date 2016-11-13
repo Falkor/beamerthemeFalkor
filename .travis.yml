@@ -1,14 +1,14 @@
 # LaTeX/TexLive Packages comes with R:
 # see https://docs.travis-ci.com/user/languages/r/
-language: r
+language: bash
 sudo: false
 cache:
   - apt
 os:
   - linux
 #  - osx
-before_install:
-  - tlmgr install tcolorbox
+# before_install:
+#   - tlmgr install tcolorbox
 before_script:
   - source ./tests/setup_bats.sh
 addons:
@@ -19,11 +19,14 @@ addons:
     - texlive-binaries
     - texlive-latex-base
     - texlive-latex-extra
+    - texlive-bibtex-extra
+    - lmodern
     - texlive-fonts-recommended
     - texlive-latex-recommended
     - latex-beamer
     - pgf
     - pandoc
+    - unzip
   hosts:
     - travis.dev
 env:
@@ -31,7 +34,12 @@ env:
 before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
-script:
+  # below is required as tlmgr is missing on ubuntu/precise
+  - export TEXMFLOCAL=/tmp/texmf/ && mkdir -p $TEXMFLOCAL/tex/latex/
+  - curl http://mirrors.ctan.org/install/macros/latex/contrib/tcolorbox.tds.zip -o "$TEXMFLOCAL/tcolorbox.tds.zip"
+  - unzip $TEXMFLOCAL/tcolorbox.tds.zip -d $TEXMFLOCAL
+  - texhash
+  script:
   - bats tests
 notifications:
   email:

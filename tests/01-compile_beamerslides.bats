@@ -1,7 +1,7 @@
 #! /usr/bin/env bats
 ################################################################################
 # 01-compile_beamerslides.bats
-# Time-stamp: <Sat 2016-11-12 18:08 svarrette>
+# Time-stamp: <Sat 2016-11-12 19:00 svarrette>
 #
 # Bats: Bash Automated Testing System -- https://github.com/sstephenson/bats
 # Installation: see README.md and setup_bats.sh
@@ -42,10 +42,11 @@ print_info() {
 
 setup() {
     [ -z "`which pdflatex`" ] && skip || true
-    # The below one is a dirty way to detect crappy travis ubuntu/precise environment
-    # where the simplest way to install tcolorbox is through tlmgr... unfortunately
-    # not present on precise (but in 'texlive-base' starting trusty)
-    [ -z "`which tlmgr`"]     && skip || true
+    # The below one is a dirty way to detect crappy travis ubuntu/precise
+    # environment where the simplest way to install tcolorbox is through
+    # tlmgr... unfortunately not present on precise (but in 'texlive-base'
+    # starting trusty)
+    #[ -z "`which tlmgr`"]     && skip || true
 }
 
 @test "preliminary or preventive clean" {
