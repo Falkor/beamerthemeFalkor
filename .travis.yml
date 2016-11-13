@@ -5,6 +5,8 @@ cache:
 os:
   - linux
 #  - osx
+before_install:
+  - tlmgr install tcolorbox
 before_script:
   - source ./tests/setup_bats.sh
 addons:
@@ -12,11 +14,11 @@ addons:
     packages:
     - build-essential
     - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-fonts-recommended
+    - texlive-latex-recommended
     - latex-beamer
     - pgf
-    - texlive-latex-extra
-    - texlive-bibtex-extra
-    - texlive-fonts-recommended
     - pandoc
   hosts:
     - travis.dev
