@@ -27,14 +27,17 @@ addons:
     - unzip
   hosts:
     - travis.dev
+env:
+  global:
+    - TEXMFLOCAL=/tmp/texmf/
 before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
-  - export TEXMFLOCAL=/tmp/texmf/ && mkdir -p $TEXMFLOCAL/tex/latex/
+  - mkdir -p $TEXMFLOCAL/tex/latex/
   - curl http://mirrors.ctan.org/install/macros/latex/contrib/tcolorbox.tds.zip -o "$TEXMFLOCAL/tcolorbox.tds.zip"
   - unzip $TEXMFLOCAL/tcolorbox.tds.zip -d $TEXMFLOCAL
   - texhash
-  script:
+script:
   - bats tests
 notifications:
   email:
