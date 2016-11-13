@@ -2,8 +2,8 @@ language: bash
 dist: trusty
 sudo: false
 group: beta
-cache:
-  - apt
+# cache:
+#   - apt
 os:
   - linux
 #  - osx
