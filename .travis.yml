@@ -19,6 +19,7 @@ addons:
     - lmodern
     - texlive-fonts-recommended
     - texlive-latex-recommended
+    - texlive-science
     - latex-beamer
     - pgf
     - pandoc
@@ -28,13 +29,19 @@ addons:
 env:
   global:
     - TEXMFLOCAL=/tmp/texmf/
+# installing a couple of LaTeX packages from CTAN manually as the
+# tlmgr command is mising on ubuntu/precise
 before_script:
   - source ./tests/setup_bats.sh
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
   - mkdir -p $TEXMFLOCAL/tex/latex/
   - wget http://mirrors.ctan.org/install/macros/latex/contrib/tcolorbox.tds.zip
+  - wget http://mirrors.ctan.org/macros/latex/contrib/floatflt.zip
   - unzip tcolorbox.tds.zip -d $TEXMFLOCAL
+  - unzip floatflt.zip
+  - cd floatflt/ && latex floatflt.ins && cd -
+  - cp floatflt/floatflt.sty $TEXMFLOCAL/tex/latex/
   - texhash
 script:
   - bats tests
