@@ -1051,8 +1051,9 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\wbegin}[1]{\begin{alertblock}{#1}}
 \newcommand{\wend}{\end{alertblock}}
 % Quick shortcuts
-\newcommand{\warn}[2]{\begin{alertblock}{#1}#2\end{alertblock}}
+\newcommand{\block}[2]{\begin{block}{#1}#2\end{block}}
 \newcommand{\ex}[2]{\begin{exampleblock}{#1}#2\end{exampleblock}}
+\newcommand{\warn}[2]{\begin{alertblock}{#1}#2\end{alertblock}}
 \newcommand{\toyou}[1]{\ex{}{\centering Your Turn! #1}}
 % nice box to display commands
 \newcommand{\command}[1]{\begin{tcolorbox}[colback=black!5!white,colframe=white!75!black,leftrule=3mm]\cmdlineentry{\scriptsize #1}\end{tcolorbox}}
