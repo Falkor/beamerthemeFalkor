@@ -46,4 +46,5 @@ notifications:
     on_success: never
   slack:
     rooms:
-      secure: JEi0rqcU1DsXPvO1AKPxtSQqG51u55SbDxzLajjL97MdZAobghD1j933gqpAxrKRKXoaxRAHERV6ryMecnTY8TSz+EVgnYjfPvCINH6a5EnSQsVb3QcxCHHTXD+h8nRcdDnAO+xt2dQDGuSwHyEfPSYkzyK7EaZSIsUyBGhNUe8=
+    - secure: JEi0rqcU1DsXPvO1AKPxtSQqG51u55SbDxzLajjL97MdZAobghD1j933gqpAxrKRKXoaxRAHERV6ryMecnTY8TSz+EVgnYjfPvCINH6a5EnSQsVb3QcxCHHTXD+h8nRcdDnAO+xt2dQDGuSwHyEfPSYkzyK7EaZSIsUyBGhNUe8=
+    - secure: OZvUL1TBdcab6at0ZPiKkD2SkeOXJ1FJBad2fPeBNZe8OGgLru+aXeNRXvfVNJBi3qOTjg9KWqrzs2BfNjA1u8jlXmyFxdC81keNkAE32h14smeKa80wZ51yeNmC9sTmO9glBG156C1oTte6wkf1KZjdSov9EpP26iRJ5XqilKI=
