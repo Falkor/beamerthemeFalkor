@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Sat 2016-11-12 19:46 svarrette>
+% Time-stamp: <Thu 2016-12-08 15:59 svarrette>
 %
 % .            Copyright (c) 2009-2016 Sebastien Varrette.
 %
@@ -973,6 +973,24 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\source}[1]{{\tiny[\textcolor{progressbar@fgblue}{Source} : #1]}}
 \newcommand{\myurl}[1]{{\tiny\url{#1}}}
 
+% ==== courtesy
+% \begin{textblock}{WIDTH}(X,Y)  % Ex (top right slide areai): \begin{textblock}{0.25}(0.7,0.2) ... \end{textblock}
+%  ...
+% \end{textblock}
+\usepackage[absolute,overlay]{textpos}
+% Set unit for textpos / textblock
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+\newcommand{\courtesy}[1]{%
+  \begin{textblock}{0.6}(0.3,0.9)\tiny %
+    \hfill\tiny \textit{\structure{Courtesy} of #1}%
+  \end{textblock}%
+}%
+
+
+
+
 
 %=== shortcuts
 \newcommand{\titlesec}  [1]{
@@ -1100,5 +1118,3 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\cend}{\columnsend}
 
 \newcommand{\cmd}[1]{\begin{cmdline}\cmdlineentry{#1}\end{cmdline}}
-
-
