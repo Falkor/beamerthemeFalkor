@@ -1082,6 +1082,8 @@ leftmargin\romannumeral\@ld \endcsname
 
 % helper to images
 \newcommand{\transientimg}[3]{\only<#1>{\includegraphics[#2]{#3}}}
+\newcommand{\imgw}[2]{\includegraphics[width=#1\textwidth]{#2}}
+\newcommand{\imgh}[2]{\includegraphics[height=#1\textheight]{#2}}
 
 % easiest column (c) management.
 % Usage:
@@ -1098,3 +1100,5 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\cend}{\columnsend}
 
 \newcommand{\cmd}[1]{\begin{cmdline}\cmdlineentry{#1}\end{cmdline}}
+
+
