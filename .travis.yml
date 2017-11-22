@@ -33,7 +33,7 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
 - mkdir -p $TEXMFLOCAL/tex/latex/
-- wget -q http://mirrors.ctan.org/install/macros/latex/contrib/tcolorbox.tds.zip
+- wget -q http://mirrors.ctan.org/macros/latex/contrib/tcolorbox.zip
 - wget -q http://mirrors.ctan.org/macros/latex/contrib/floatflt.zip
 - wget -q http://mirrors.ctan.org/macros/latex/contrib/ulem.zip
 - unzip -qq tcolorbox.tds.zip -d $TEXMFLOCAL
