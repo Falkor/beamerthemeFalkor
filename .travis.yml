@@ -36,7 +36,7 @@ before_script:
 - wget -q http://mirrors.ctan.org/macros/latex/contrib/tcolorbox.zip
 - wget -q http://mirrors.ctan.org/macros/latex/contrib/floatflt.zip
 - wget -q http://mirrors.ctan.org/macros/latex/contrib/ulem.zip
-- unzip -qq tcolorbox.tds.zip -d $TEXMFLOCAL
+- unzip -qq tcolorbox.zip -d $TEXMFLOCAL
 - unzip -qq floatflt.zip
 - unzip -qq ulem.zip
 - cd ./floatflt/ && latex floatflt.ins && cd -
