@@ -1,7 +1,7 @@
 %=============================================================================
 % File:  beamerthemeFalkor.sty --  My personal LaTeX beamer style
 % Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Sat 2017-10-21 22:29 svarrette>
+% Time-stamp: <Thu 2018-11-22 13:07 svarrette>
 %
 % .            Copyright (c) 2009-2016 Sebastien Varrette.
 %
@@ -1088,6 +1088,33 @@ leftmargin\romannumeral\@ld \endcsname
 % \gend
 \newcommand{\gbegin}[2]{\begin{tcolorbox}[width=#1,colback=black!5!white,colframe=white!75!black,title=#2]\centering}
 \newcommand{\gend}{\end{tcolorbox}}
+
+% Left title box
+\RequirePackage{tikz}
+\tcbuselibrary{skins}
+
+\newtcolorbox{lefttitlebox}[2][]{%
+  enhanced,
+  size=small,
+  boxsep=0pt,
+  left=0pt,top=2pt,bottom=2pt,
+  %boxsep=3pt,
+  arc=1.25ex,
+  boxrule=1pt,
+  leftrule=15pt,
+  overlay unbroken and first ={%
+    \node[rotate=90,
+          minimum width=1cm,
+          anchor=south,
+          font=\sffamily\bfseries,
+          yshift=-15pt,
+          white]
+    at (frame.west) {#2};
+  }
+}
+
+\newcommand{\ltbbegin}[1]{\begin{lefttitlebox}[colback=black!5!white,colframe=white!75!black,title=#1]{#1}}
+\newcommand{\ltbend}{\end{lefttitlebox}}
 
 % \only<> and \uncover<> are badly supported with pandoc parser (because of '<' and '>'), so
 % I redefine here some wrapper that would pass the parser
