@@ -1,6 +1,6 @@
 ####################################################################################
 # Makefile (configuration file for GNU make - see http://www.gnu.org/software/make/)
-# Time-stamp: <Sat 2015-06-13 12:27 svarrette>
+# Time-stamp: <Tue 2018-11-06 11:28 svarrette>
 #     __  __       _         __ _ _
 #    |  \/  | __ _| | _____ / _(_) | ___
 #    | |\/| |/ _` | |/ / _ \ |_| | |/ _ \
@@ -40,6 +40,9 @@ GIT_DIRTY      = $(shell git diff --shortstat 2> /dev/null | tail -n1 )
 GITSTATS     = ./.submodules/gitstats/gitstats
 GITSTATS_DIR = gitstats
 
+# Branches to update on 'make up'
+GIT_BRANCHES_TO_UPDATE = $(GITFLOW_BR_DEVELOP) $(GITFLOW_BR_MASTER)
+
 VERSION  = $(shell [ -f VERSION ] && head VERSION || echo "0.0.1")
 # OR try to guess directly from the last git tag
 #VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
@@ -48,7 +51,6 @@ MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
 # total number of commits
 BUILD      = $(shell git log --oneline | wc -l | sed -e "s/[ \t]*//g")
-
 #REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
 #ROOTDIR    = $(shell git rev-parse --show-toplevel)
 NEXT_MAJOR_VERSION = $(shell expr $(MAJOR) + 1).0.0-b$(BUILD)
@@ -58,16 +60,23 @@ NEXT_PATCH_VERSION = $(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)
 # Default targets
 TARGETS =
 
-# Local configuration
+# Local configuration - Kept for compatibity reason
 LOCAL_MAKEFILE = .Makefile.local
 
+# Makefile custom hooks
+MAKEFILE_BEFORE = .Makefile.before
+MAKEFILE_AFTER  = .Makefile.after
+
 ### Main variables
-.PHONY: all archive clean fetch help release setup start_bump_major start_bump_minor start_bump_patch subtree_setup subtree_up subtree_diff test upgrade versioninfo
+.PHONY: all archive clean fetch help release setup start_bump_major start_bump_minor start_bump_patch subtree_setup subtree_up subtree_diff test upgrade versioninfo doc
 
 ############################### Now starting rules ################################
 # Load local settings, if existing (to override variable eventually)
 ifneq (,$(wildcard $(LOCAL_MAKEFILE)))
 include $(LOCAL_MAKEFILE)
+endif
+ifneq (,$(wildcard $(MAKEFILE_BEFORE)))
+include $(MAKEFILE_BEFORE)
 endif
 
 # Required rule : what's to be done each time
@@ -80,13 +89,15 @@ info:
 	@echo "--- Directories --- "
 	@echo "SUPER_DIR    -> '$(SUPER_DIR)'"
 	@echo "--- Git stuff ---"
-	@echo "GITFLOW            -> '$(GITFLOW)'"
-	@echo "GITFLOW_BR_MASTER  -> '$(GITFLOW_BR_MASTER)'"
-	@echo "GITFLOW_BR_DEVELOP -> '$(GITFLOW_BR_DEVELOP)'"
-	@echo "CURRENT_BRANCH     -> '$(CURRENT_BRANCH)'"
-	@echo "GIT_REMOTES        -> '$(GIT_REMOTES)'"
-	@echo "GIT_DIRTY          -> '$(GIT_DIRTY)'"
-	@echo "GIT_SUBTREE_REPOS  -> '$(GIT_SUBTREE_REPOS)'"
+	@echo "GITFLOW                -> '$(GITFLOW)'"
+	@echo "GITFLOW_BR_MASTER      -> '$(GITFLOW_BR_MASTER)'"
+	@echo "GITFLOW_BR_DEVELOP     -> '$(GITFLOW_BR_DEVELOP)'"
+	@echo "CURRENT_BRANCH         -> '$(CURRENT_BRANCH)'"
+	@echo "GIT_BRANCHES           -> '$(GIT_BRANCHES)'"
+	@echo "GIT_REMOTES            -> '$(GIT_REMOTES)'"
+	@echo "GIT_DIRTY              -> '$(GIT_DIRTY)'"
+	@echo "GIT_SUBTREE_REPOS      -> '$(GIT_SUBTREE_REPOS)'"
+	@echo "GIT_BRANCHES_TO_UPDATE -> $(GIT_BRANCHES_TO_UPDATE)"
 	@echo ""
 	@echo "Consider running 'make versioninfo' to get info on git versionning variables"
 
@@ -96,8 +107,8 @@ archive: clean
 
 ############################### Git Bootstrapping rules ################################
 setup:
-	git fetch origin
-	git branch --set-upstream $(GITFLOW_BR_MASTER) origin/$(GITFLOW_BR_MASTER)
+	-git fetch origin
+	-git branch --track $(GITFLOW_BR_MASTER) origin/$(GITFLOW_BR_MASTER)
 	git config gitflow.branch.master     $(GITFLOW_BR_MASTER)
 	git config gitflow.branch.develop    $(GITFLOW_BR_DEVELOP)
 	git config gitflow.prefix.feature    feature/
@@ -162,15 +173,24 @@ release: clean
 	git push origin --tags
 endif
 
-### Git submodule management: upgrade to the latest version
-update:
+### Git (submodule|branch)  management: pull and upgrade to the latest version
+up update:
+	$(if $(GIT_DIRTY), $(error "Unable to pull latest commits: Dirty Git repository"))
+	@for br in $(GIT_BRANCHES_TO_UPDATE); do \
+		echo -e "\n=> Pulling and updating the local branch '$$br'\n"; \
+		git checkout $$br; \
+		git pull origin $$br; \
+	done
+	git checkout $(CURRENT_BRANCH)
+	@echo "=> updating (NOT upgrading) git submodule"
 	git submodule init
 	git submodule update
 
+### Git submodule upgrade
 upgrade: update
 	git submodule foreach 'git fetch origin; git checkout $$(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
-	@for submoddir in $(shell git submodule status | awk '{ print $$2 }' | xargs echo); do \
-		git commit -s -m "Upgrading Git submodule '$$submoddir' to the latest version" $$submoddir ;\
+	-@for submoddir in $(shell git submodule status | awk '{ print $$2 }' | xargs echo); do \
+		git commit -s -m "Upgrading Git submodule '$$submoddir' to the latest version" $$submoddir || true;\
 	done
 
 
@@ -227,7 +247,10 @@ stats:
 	@if [ ! -d $(GITSTATS_DIR) ]; then mkdir -p $(GITSTATS_DIR); fi
 	$(GITSTATS) . $(GITSTATS_DIR)/
 
-
+doc:
+	@if [ -n "`which mkdocs`" ]; then \
+		mkdocs serve; \
+	fi
 
 # # force recompilation
 # force :
@@ -245,3 +268,7 @@ help :
 	@echo '|               git-flow at a given level (major, minor or patch bump) |'
 	@echo '| make release: Finalize the release using git-flow                    |'
 	@echo '+----------------------------------------------------------------------+'
+
+ifneq (,$(wildcard $(MAKEFILE_AFTER)))
+include $(MAKEFILE_AFTER)
+endif

@@ -1,9 +1,9 @@
 language: bash
 sudo: false
 cache:
-  - apt
+- apt
 os:
-  - linux
+- linux
 addons:
   apt:
     packages:
@@ -16,6 +16,7 @@ addons:
     - lmodern
     - texlive-fonts-recommended
     - texlive-latex-recommended
+    - texlive-generic-recommended
     - texlive-science
     - latex-beamer
     - pgf
@@ -23,28 +24,31 @@ addons:
     - unzip
     - git-core
   hosts:
-    - travis.dev
+  - travis.dev
 env:
   global:
-    - TEXMFLOCAL=/tmp/texmf/
-# installing a couple of LaTeX packages from CTAN manually as the
-# tlmgr command is mising on ubuntu/precise
+  - TEXMFLOCAL=/tmp/texmf/
 before_script:
-  - source ./tests/setup_bats.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
-  - mkdir -p $TEXMFLOCAL/tex/latex/
-  - wget -q http://mirrors.ctan.org/install/macros/latex/contrib/tcolorbox.tds.zip
-  - wget -q http://mirrors.ctan.org/macros/latex/contrib/floatflt.zip
-  - unzip -qq tcolorbox.tds.zip -d $TEXMFLOCAL
-  - unzip -qq floatflt.zip
-  - cd ./floatflt/ && latex floatflt.ins && cd -
-  - cp ./floatflt/floatflt.sty $TEXMFLOCAL/tex/latex/
-  - texhash
+- source ./tests/setup_bats.sh
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update      ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install bats; fi
+- mkdir -p $TEXMFLOCAL/tex/latex/
+- wget -q http://mirrors.ctan.org/macros/latex/contrib/tcolorbox.zip
+- wget -q http://mirrors.ctan.org/macros/latex/contrib/floatflt.zip
+- wget -q http://mirrors.ctan.org/macros/latex/contrib/ulem.zip
+- unzip -qq tcolorbox.zip -d $TEXMFLOCAL
+- unzip -qq floatflt.zip
+- unzip -qq ulem.zip
+- cd ./floatflt/ && latex floatflt.ins && cd -
+- cp ./floatflt/floatflt.sty $TEXMFLOCAL/tex/latex/
+- cp ./ulem/ulem.sty         $TEXMFLOCAL/tex/latex/
+- texhash
 script:
-  - bats tests
+- bats tests
 notifications:
   email:
     on_success: never
   slack:
-    secure: NBN4QhHuaXpwZIxUOzZi29Z4iW0EK/d2ID7zZqz+1RDO/9BD7QqX5unM/SFP46oTbhEqNH/vMLLMFQ9i9l7Z1i6Z6nCNRiLRIjgPSL+3GMamPQm1Pj4JaLkwLHogxHdRvozfU3tdSG9uGmK++Aak/NLC/i5TASGrBMgKrmXLXEk=
+    rooms:
+    - secure: JEi0rqcU1DsXPvO1AKPxtSQqG51u55SbDxzLajjL97MdZAobghD1j933gqpAxrKRKXoaxRAHERV6ryMecnTY8TSz+EVgnYjfPvCINH6a5EnSQsVb3QcxCHHTXD+h8nRcdDnAO+xt2dQDGuSwHyEfPSYkzyK7EaZSIsUyBGhNUe8=
+    - secure: OZvUL1TBdcab6at0ZPiKkD2SkeOXJ1FJBad2fPeBNZe8OGgLru+aXeNRXvfVNJBi3qOTjg9KWqrzs2BfNjA1u8jlXmyFxdC81keNkAE32h14smeKa80wZ51yeNmC9sTmO9glBG156C1oTte6wkf1KZjdSov9EpP26iRJ5XqilKI=
