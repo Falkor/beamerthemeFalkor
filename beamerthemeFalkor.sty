@@ -1089,6 +1089,11 @@ leftmargin\romannumeral\@ld \endcsname
 \newcommand{\gbegin}[2]{\begin{tcolorbox}[width=#1,colback=black!5!white,colframe=white!75!black,title=#2]\centering}
 \newcommand{\gend}{\end{tcolorbox}}
 
+% Quick gray box to display a URL (WITHOUT) https:// to save space
+% Usage: \boxurl{<width>}{<title>}{mysite.domain.org}
+\newcommand{\boxurl}[3]{\begin{tcolorbox}[width=#1\textwidth,colback=black!5!white,colframe=white!75!black,title=#2]\centering\small\texttt{\href{https://#3}{#3}}\end{tcolorbox}}
+
+
 % Left title box
 \RequirePackage{tikz}
 \tcbuselibrary{skins}
