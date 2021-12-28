@@ -1,6 +1,6 @@
 -*- mode: markdown; mode: visual-line; -*-
 
-[![Licence](https://img.shields.io/badge/license-CC by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)[![Build Status](https://travis-ci.org/Falkor/beamerthemeFalkor.svg?branch=master)](https://travis-ci.org/Falkor/beamerthemeFalkor)
+[![Licence](https://img.shields.io/badge/license-CC--by--nc--sa-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0)[![Build Status](https://travis-ci.org/Falkor/beamerthemeFalkor.svg?branch=master)](https://travis-ci.org/Falkor/beamerthemeFalkor)
 
                  _____     _ _                ____
                 |  ___|_ _| | | _____  _ __  | __ )  ___  __ _ _ __ ___   ___ _ __
