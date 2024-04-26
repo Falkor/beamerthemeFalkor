@@ -150,13 +150,53 @@ And now some table
 
 ### Images
 
+* You can of course do it in \LaTeX\  directly
+   - recall to eventually adapt `\graphicspath{}` to specify the searched directories:
+
+```latex
+\hfill{}\includegraphics[width=0.1\textwidth]{logo_github.png}\hfill{}
+```
+
+\hfill{}\includegraphics[width=0.1\textwidth]{logo_github.png}\hfill{}
+
 * Classical markdown syntax (yet with no control on the size)
 
-![](logo_ULHPC_100x100.png)
+```
+![](images/logo_github.png)
+```
 
-So probaby you wish to do it in \LaTeX\ directly
+![](images/logo_github.png)
 
-\includegraphics[width=2em]{logo_ULHPC_100x100.png}
+
+### Advanced images management
+
+\begin{textblock}{0.15}(0.6,0.5)
+\includegraphics[width=\textwidth]{logo_github.png}
+\end{textblock}
+
+* Placing images remains complex in \LaTeX
+* A very useful package to _program_ image placement is `textpos`
+    - placement as *overlay* as in the below example
+    - particularly interesting to optimize empty area in your slides
+
+\scriptsize
+
+```latex
+% Useful package to place text wherever you want.
+% Usage: (where WIDTH, X and Y are relative numbers between 0 and 1)
+% \begin{textblock}{WIDTH}(X,Y)  % Ex \begin{textblock}{0.25}(0.7,0.2) % top right slide area
+%  ...                           %      \includegraphics[width=\textwidth]{...}
+% \end{textblock}                %    \end{textblock}
+\usepackage[absolute,overlay]{textpos}
+% Set unit for textpos / textblock
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+% [...]
+\begin{textblock}{0.15}(0.6,0.5)
+\includegraphics[width=\textwidth]{logo_github.png}
+\end{textblock}
+```
+
 
 
 ### Columns (with markdown inside)
@@ -241,3 +281,48 @@ In french
 See [UL HPC website].
 
 [UL HPC website]: http://hpc.uni.lu
+
+### Blocks with pandoc syntax
+
+::: {.block}
+#### Perspectives
+
+- liste
+- liste
+:::
+
+follow up text...
+
+
+### Columns with pandoc syntax
+
+\footnotesize
+
+::: columns
+
+:::: {.column width=55%}
+
+####
+
+* Institute/[...]\newline
+  Office
+* _Contact_: `prenom.nom@ssi.gouv.fr`
+
+::::
+
+:::: {.column width=45%}
+
+\centering
+\begin{tcolorbox}[width=0.8\textwidth]\centering
+\texttt{https://site.domain.com}
+\end{tcolorbox}
+
+<!-- \scalebox{8}{\emph{?}} -->
+
+::::
+
+:::
+
+\scriptsize
+
+* Hello

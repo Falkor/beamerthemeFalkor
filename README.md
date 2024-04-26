@@ -133,6 +133,11 @@ All customization / installation instructions are better described in the sample
 You can see a concrete example in [`examples/markdown/`](examples/markdown).
 In particular, you might consider the [markdown file](examples/markdown/_content_in_markdown.md) used to produce the slides (see also the [raw markdown version](https://raw.githubusercontent.com/Falkor/beamerthemeFalkor/master/examples/markdown/_content_in_markdown.md))
 
+
+[![](examples/cover_markdown.png)](examples/markdown.pdf)
+
+
+
 ## Automatic Tests of Falkor/beamerthemeFalkor
 
 A set of simple tests based on [Bats](https://github.com/sstephenson/bats): "Bash Automated Testing System" are proposed on the `tests/` directory, and served to validate that this theme permits a successful compilation of the sample slides proposed on the `examples/` directory.
