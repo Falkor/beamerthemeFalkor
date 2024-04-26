@@ -7,47 +7,90 @@
                 | |_ / _` | | |/ / _ \| '__| |  _ \ / _ \/ _` | '_ ` _ \ / _ \ '__|
                 |  _| (_| | |   < (_) | |    | |_) |  __/ (_| | | | | | |  __/ |
                 |_|  \__,_|_|_|\_\___/|_|    |____/ \___|\__,_|_| |_| |_|\___|_|
-
+    
                                   _____ _
                                  |_   _| |__   ___ _ __ ___   ___
                                    | | | '_ \ / _ \ '_ ` _ \ / _ \
                                    | | | | | |  __/ | | | | |  __/
                                    |_| |_| |_|\___|_| |_| |_|\___|
+    
+                  Copyright (c) 2015-2024 Sebastien Varrette <sebastien.varrette@gmail.com>
 
-                  Copyright (c) 2015-2016 Sebastien Varrette <sebastien.varrette@uni.lu>
-
-| [Project Page](https://github.com/Falkor/beamerthemeFalkor) | [Sources](https://github.com/Falkor/beamerthemeFalkor) |              [Issues](https://github.com/Falkor/beamerthemeFalkor/issues) |
+| [Project Page](https://github.com/Falkor/beamerthemeFalkor) | [Sources](https://github.com/Falkor/beamerthemeFalkor) |  [Issues](https://github.com/Falkor/beamerthemeFalkor/issues)             |
 
 ## Synopsis
 
-My personal LaTeX Beamer theme, provided in a working environment.
+This repository holds my personal LaTeX Beamer theme, provided in a working environment.
 
 This theme is largely based on the [progressbar](http://recherche.noiraudes.net/fr/LaTeX.php) beamer theme (by Sylvain Bouveret) with my own customization to fit my tastes.
 So feel free to send him a postal card (as he asks for ;) )
 
       Progressbar Version: 0.42 September 2010.
 
-## Installation
+## Reopository Installation
 
-This repository is hosted on [Github](https://github.com/Falkor/beamerthemeFalkor).
+This repository is hosted on [Github](https://github.com/Falkor/beamerthemeFalkor). To clone it and setup it with, proceed as follows:
 
-**`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running:
+```bash
+# Eventually to keep things organised...
+mkdir -p ~/git/github.com/Falkor
+cd ~/git/github.com/Falkor
+# Clone and setup
+git clone https://github.com/Falkor/beamerthemeFalkor.git
+cd beamerthemefalkor
+make setup
+```
 
-    $> cd beamerthemefalkor
-    $> make setup
+## Beamer Theme installation
 
-Then you can copy the `beamerthemeFalkor.sty` in your own repository.
+* Either **copy** `beamerthemeFalkor.sty` at the root of (each of) your LaTeX sources:
+  ```bash
+  wget https://raw.githubusercontent.com/Falkor/beamerthemeFalkor/master/beamerthemeFalkor.sty
+  ```
+* Or install it globally:
+  ```bash
+  # Find the directory where your latex packages are installed.
+  kpsewhich -var-value TEXMFHOME   # Normally: ~/texmf
+  # create the directory or a symplink toward the working copy of this reposirory in that placed
+  mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
+  # ... assuming you are in the local directory where you cloned this repository
+  ln -s $(pwd) $(kpsewhich -var-value TEXMFHOME)/tex/latex/beamertheme-Falkor
+  # generate an index of that tree
+  texhash $(kpsewhich -var-value TEXMFHOME)
+  ```
+* Or make it a git submodule of your repository hosting the beamer Latex sources (my prefered way):
+  ```bash
+  # From the root repository hosting your LaTeX Beamer slides, assuming a **clean** (non-dirty) state:
+  git submodule add https://github.com/Falkor/beamerthemeFalkor .submodules/beamerthemeFalkor
+  git commit -a -s -m "Add Git submodule '.submodules/beamerthemeFalkor' from 'https://github.com/Falkor/beamerthemeFalkor'"
+  # ... then in the slides sources, symlink beamerthemeFalkor.sty to the submodules directory.
+  # Personnaly, this is how I like to setup it:
+  cd slides/<year>/<topic>/src  # I prefer to keep LaTeX sources separated into src/
+  # Create a symlink to the git root directory
+  ln -s $(git rev-parse --show-cdup) .root
+  # symlink beamerthemeFalkor.sty from there
+  ln -s .root/.submodules/beamerthemeFalkor/beamerthemeFalkor.sty beamerthemeFalkor.sty
+  git add .root  beamerthemeFalkor.sty
+  git commit -s -m "setup beamerthemeFalkor.sty from associated git submodule"
+  ```
 
-## Usage
+The later has the advantage to ensure all collaborators get the same version of the theme, howerver it also means that you have to provide a way for them (`make setup` etc.) to initiate correctly the git submodules within their own repository...
+
+
+## Theme Usage
+
+Once installed, you can use this theme as follows (basically, you **MUST** configure the main image and the logo:
 
 ```latex
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 
-% customize the image using the image=<path> option
+% customize the image using the image=<path> option - use relative path!
 \usetheme[image=logo_github.png]{Falkor}
 
-% customize the logo (to be placed on the bottom right) as follows:
+% Mandatory to **declare** a logo to be placed on the bottom right -- use again relative path to the image
 \pgfdeclareimage[height=0.8cm]{logo}{logo_UL.pdf}
+% Ex:
+% \pgfdeclareimage[height=0.8cm]{logo}{logos/logo_RF.png}
 ```
 
 You probably want to use [my own LaTeX Makefile](https://github.com/Falkor/Makefiles/blob/devel/latex/Makefile) combined with my generic [LaTeX style file](https://github.com/Falkor/Makefiles/blob/devel/latex/template-article-styles/_style.sty) as done in the [advanced example](examples/advanced)
@@ -58,8 +101,20 @@ All customization / installation instructions are better described in the sample
 
 * a [Minimal](examples/minimal.pdf) example -- [sources](examples/minimal/)
 * a [more complete](examples/advanced.pdf) example with usage instructions -- [sources](examples/advanced/)
-* you can (who said should?) at least try to combine it with [markdown](http://daringfireball.net/projects/markdown/).
+* you can (who said should?) at least try to combine it with [markdown](http://daringfireball.net/projects/markdown/) and [pandoc](http://pandoc.org/).
    - an [example based on markdown](examples/markdown.pdf) is also provided -- [sources](examples/markdown/)
+
+### Minimal example
+
+[![](examples/cover_minimal.png)](examples/minimal.pdf)
+
+
+
+### More advanced example
+
+[![](examples/cover_advanced.png)](examples/advanced.pdf)
+
+
 
 ## Markdown-based Beamer Workflow
 

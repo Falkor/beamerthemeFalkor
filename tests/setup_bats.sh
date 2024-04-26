@@ -2,7 +2,7 @@
 ################################################################################
 # setup_bats.sh - Setup Bats -- Bash Automated Testing System
 # .               See https://github.com/sstephenson/bats
-# Time-stamp: <Fri 2024-04-26 10:27 svarrette>
+# Time-stamp: <Fri 2024-04-26 10:35 svarrette>
 #
 # Usage:
 #       source setup_bats.sh

@@ -1,21 +1,20 @@
 % =============================================================================
 % File:  advanced.tex --  Example of the use of the Falkor Beamer theme
-% Author(s): Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% Time-stamp: <Mon 2015-06-15 12:07 svarrette>
-% 
-% Copyright (c) 2012-2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
-% 
+% Time-stamp: <Fri 2024-04-26 17:12 svarrette>
+%
+% Copyright (c) 2012-2024 Sebastien Varrette <Sebastien.Varrette@gmail.com>
+%
 % For more information:
 % - LaTeX: http://www.latex-project.org/
 % - Beamer: https://bitbucket.org/rivanvx/beamer/
 % - LaTeX symbol list:
 % http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf
-% 
+%
 % Latest version of these files can be found on Github:
 % https://github.com/Falkor/beamerthemeFalkor
 % =============================================================================
 
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 % \documentclass[draft]{beamer}
 \usepackage{_style}
 
@@ -37,16 +36,14 @@
 
 %%%%%%%%%% Header %%%%%%%%%%%%
 \title{The \texttt{Falkor} \LaTeX Beamer Style}
-\subtitle{A Complete Example with Instructions}
+\subtitle{A more advanced example with instructions}
 
-\author{S\'ebastien Varrette}
-\institute[PCOG Research unit]{
-  Parallel Computing and Optimization Group (\href{http://pcog.uni.lu}{PCOG}),
-  University of Luxembourg (\href{http://www.uni.lu}{UL}), Luxembourg
+\author{Firstname Lastname}
+\institute[Short institute]{
+  Long institute
 }
-
 % Mandatory to **declare** a logo to be placed on the bottom right -- normally the
-% university logo. ADAPT ACCORDINGLY:
+% university/organization logo. ADAPT ACCORDINGLY:
 \pgfdeclareimage[height=0.8cm]{logo}{images/logo_UL.pdf}
 
 \date{}
@@ -82,95 +79,54 @@
   }
 }
 
-% ====================
-\section{Instructions}
 
-% ----------------------------------
-\subsection{Brutal Copy approach}
+% ==============================
+\section{More complete setup instructions}
 
-% ~~~~~~
-\frame{
-  \frametitle{Brutal copy usage}
 
-  \begin{block}{Bootstrap a new working directory}
-    \begin{itemize}
-      \item Get the latest version on
-      \href{https://github.com/Falkor/beamerthemeFalkor}{Github}
-      \begin{cmdline}
-        \cmdlineentry{cd /path/to/cloning/dir}\\
-        \cmdlineentry{git clone https://github.com/Falkor/beamerthemeFalkor.git}
-      \end{cmdline}
-      \item Duplicate the sample structure of the freshly cloned repository
-      \begin{cmdline}
-        \cmdlineentry{cd /path/to/working/dir}\\
-        \cmdlineentry{rsync -avzu --exclude "*.git" $\backslash$\\ ~~~~~/path/to/cloning/dir/beamerthemeFalkor/example/advanced .}
-      \end{cmdline}
-      \item Copy and adapt the sample document \texttt{advanced.tex}
-      \begin{itemize}
-        \item you might wish to rename it
-        \item run \texttt{make} to generate \texttt{<name>.pdf}
-      \end{itemize}
-    \end{itemize}
-  \end{block}
+\frame[containsverbatim]{
+  \frametitle{More complete setup instructions}
+
+  \begin{lstlisting}[language=bash,basicstyle=\ttfamily\footnotesize,columns=fullflexible]
+    # Assuming you have initiated a git repo to host your LaTeX Beamer slides
+    cd path/to/project/repo
+    git init # if not yet done
+    # Add beamertheme Falkor as a git submodule
+    git submodule add https://github.com/Falkor/beamerthemeFalkor \
+        .submodules/beamerthemeFalkor
+    git commit -a -s -m "Add beamerthemeFalkor as Git submodule"
+    # Eventually repeat for the Falkor's makefiles
+    git submodule add -b devel https://github.com/Falkor/Makefiles \
+        .submodules/Makefiles
+    # create a src directory hosting the sources of your slides
+    mkdir -p  slides/<year>/<topic>/src  # /!\ ADAPT path accordingly
+    cd  slides/<year>/<topic>/src
+  \end{lstlisting}
 }
 
-% ------------------------------------------
-\subsection{The Git Submodule approach}
+\frame[containsverbatim]{
+  \frametitle{More complete setup instructions}
 
-% .......
-\frame{
-  \frametitle{[Better] Git Submodule approach}
-  Assuming you have your sources under a Git repository:
-
-  \begin{block}{Git sub-modules approach}
-    \begin{itemize}
-      \item Initiate the submodule
-      \begin{itemize}
-        \item assuming \texttt{ /path/to/working/dir} is your root Git directory
-      \end{itemize}
-      \begin{cmdline}
-        \cmdlineentry{cd /path/to/working/dir}\\
-        \cmdlineentry{git submodule add $\backslash$\\
-          ~~~~~https://github.com/Falkor/beamerthemeFalkor.git
-          $\backslash$\\
-          ~~~~~.submodules/beamerthemeFalkor}\\
-      \end{cmdline}
-      \item bootstrap the sub-directory hosting your slides sources:
-      \begin{cmdline}
-        \cmdlineentry{cd path/to/slides}\\
-        \cmdlineentry{ln -s ../../.. .root   \textit{\# ADAPT -- relative path to git root}}\\
-        \cmdlineentry{ln -s $\backslash$ .root/.submodules/.beamerthemeFalkor/beamerthemeFalkor.sty .}
-      \end{cmdline}
-    \end{itemize}
-  \end{block}
+  \begin{itemize}
+    \item Populate the slides directory
+  \end{itemize}
+  \begin{lstlisting}[language=bash,basicstyle=\ttfamily\footnotesize]
+    # From  slides/<year>/<topic>/src directory
+    # Create a symlink to the git root directory
+    ln -s $(git rev-parse --show-cdup) .root
+    # simlink beamerthemeFalkor.sty from there
+    ln -s .root/.submodules/beamerthemeFalkor/beamerthemeFalkor.sty beamerthemeFalkor.sty
+    # Copy (and transferring all the symlinks as regular files with '-L') from the
+    # 'examples/advanced' directory as template:
+    rsync -avzu -L --exclude '.root' --exclude 'beamerthemeFalkor.sty' \
+          .root/.submodules/beamerthemeFalkor/example/advanced/ .
+    mv advanced.tex slides-<topic>.text # /!\ ADAPT filename accordingly
+    make  # hopefully this should compile...
+  \end{lstlisting}
 
 }
 
-% ------------------------------------------------
-\subsection{The \texttt{FalkorLib} approach}
 
-% .......
-\frame{
-  \frametitle{[Even Better] Fully automatic}
-
-  Assuming again you have your sources under a Git repository:
-
-  \begin{block}{}
-    \begin{itemize}
-      \item Install the \href{https://github.com/Falkor/falkorlib}{FalkorLib}
-      Ruby Gem (\textbf{\alert{AT LEAST $\geq$ v.0.6 }})
-      \begin{itemize}
-        \item See
-        \href{https://github.com/Falkor/falkorlib\#installation}{instructions}
-        \item Then you shall have access to the \texttt{falkor} executable
-      \end{itemize}
-      \item Bootstrap your Beamer slides using
-      \begin{cmdline}
-        \cmdlineentry{falkor new slides}\\
-      \end{cmdline}
-    \end{itemize}
-  \end{block}
-}
 
 % ==============================
 \section{Customizations}
@@ -216,14 +172,14 @@
 %.......
 \frame{
   \frametitle{Using Markdown}
-  
+
   \begin{itemize}
     \item \href{http://daringfireball.net/projects/markdown/}{Markdown}: easy-to-read, easy-to-write plain text format
     \begin{itemize}
       \item facilitates the generation of Beamer slides
       \item prevent the use of \LaTeX for simple slides
       \begin{itemize}
-        \item using just \texttt{itemize} etc.. 
+        \item using just \texttt{itemize} etc..
       \end{itemize}
       \item conversion from  \href{http://daringfireball.net/projects/markdown/}{Markdown} to \LaTeX Beamer is done by \href{http://pandoc.org/}{pandoc}
     \end{itemize}
@@ -246,12 +202,10 @@
     \column{0.5\textwidth}
     % \emph{Contact}\\
     {\tiny
-      \emph{Sebastien Varrette}\\
-      ~~~~ \textit{mail:} \href{mailto:sebastien.varrette@uni.lu}{sebastien.varrette@uni.lu}\\
-      ~~~~ Office E-007\\
-      ~~~~ Campus Kirchberg\\
-      ~~~~ 6, rue Coudenhove-Kalergi\\
-      ~~~~ L-1359 Luxembourg
+         \emph{Firstname Lastname}\\
+         ~~~~ \textit{mail:} \href{mailto:firstame.lastname@domain.com}{firstname.lastname@domain.com}\\
+         ~~~~ Street / Local address\\
+         ~~~~ Postal code, country
 
     }
     \column{0.5\textwidth}
@@ -295,7 +249,7 @@
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % eof
-% 
+%
 % Local Variables:
 % mode: latex
 % mode: flyspell

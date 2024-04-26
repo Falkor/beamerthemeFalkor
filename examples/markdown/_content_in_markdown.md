@@ -14,7 +14,7 @@ _Note_: These examples are translated from the example of Romain Vimont
 * item 2 in a block
     - sub item 1
 
-### More on Blocks 
+### More on Blocks
 
 \blockbegin{A First Block}
 
@@ -45,26 +45,22 @@ Comments below the first block.
 
 ### Code block
 
-Indented code blocks
+* Easy code block, with color syntaxing, just specify the language:
 
-    if (a > 3) {
-      moveShip(5 * gravity, DOWN);
-    }
+```bash
+$ whoami  # commentaire bash
+$ sudo apt install pandoc
+```
 
-Fenced code blocks
+With line numbers (but the rendering is sub-optimal):
 
-~~~java
-public static void main(String... args) {
-    System.out.println("Hello world!");
-}
-~~~
-
-~~~{.c}
+```{.c .numberLines startFrom="5"}
 int main(int argc, char *argv[]) {
   printf("Hello world!\n");
   return 0;
 }
-~~~
+```
+
 
 ### Lists
 
@@ -84,7 +80,7 @@ int main(int argc, char *argv[]) {
 3. Install the dependencies
     a. `texlive-latex-base`
     b. `latex-beamer`
-4. Install a reader `Skim`
+4. Install a PDF reader
 
 ### Citations and appearance
 
@@ -114,28 +110,28 @@ Then another.
 Now some formatting:
 
 | There exists 2 types of persons:
-|   those who understand recursivity and 
+|   those who understand recursivity and
 |   those who don't understand that there exists 2 types of persons:
-|      those who understand recursivity and 
+|      those who understand recursivity and
 |      those who don't understand that there exists 2 types of persons:
 |         ...
 
 
 
-### \LaTeX /Beamer Special 
+### \LaTeX /Beamer Special
 
-Some elements __do not__ exist in Pandoc Markdown.
-In this case, you shall simply use \LaTeX.
+* Some elements __do not__ exist in Pandoc Markdown.
+   - in this case, you shall simply use \LaTeX ;)
 
 \begin{alertblock}{Alert}
-That's an alertblock
+That's an alertblock with some \textbf{\LaTeX} syntax
 \end{alertblock}
 
 \begin{exampleblock}{Example}
-That's an exampleblock
+That's an exampleblock with some \textbf{\LaTeX} syntax
 \end{exampleblock}
 
-### Maths \& Tables 
+### Maths \& Tables
 
 With some Formulaes:
 
@@ -145,15 +141,16 @@ $$
 
 And now some table
 
-| Test   | col2 | col3 |
-|--------|------|------|
-| item 1 |   14 |   28 |
-| item 2 |    1 |    1 |
-|        |      |      |
+
+| __Test__ | __left__   | __centre__ | __right__ |
+|----------|------------|:-------:   |---------: |
+| item 1   |         14 | 28         | 56        |
+| item 2   |          1 | `text`     | $2^{128}$ |
+
 
 ### Images
 
-Classical markdown syntax (yet with no control on the size)
+* Classical markdown syntax (yet with no control on the size)
 
 ![](logo_ULHPC_100x100.png)
 
@@ -212,7 +209,7 @@ Text on the right column
 Inside a column environment:
 
 * the `block` environment raise an error
-* instead, use the following commands: 
+* instead, use the following commands:
 
 ~~~latex
 \blockbegin{Title}
@@ -223,7 +220,7 @@ Inside a column environment:
 \columnsend
 
 * This allows to use the Markdown syntax **in** the block.
-    - only required with the `\columnsbegin ... \columnsend` construction 
+    - only required with the `\columnsbegin ... \columnsend` construction
 
 
 ### Links
@@ -244,5 +241,3 @@ In french
 See [UL HPC website].
 
 [UL HPC website]: http://hpc.uni.lu
-
-

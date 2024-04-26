@@ -1,8 +1,8 @@
 ################################################################################
 # Makefile - Configuration file for GNU make (http://www.gnu.org/software/make/)
-# Time-stamp: <Mon 2015-06-15 12:57 svarrette>
+# Time-stamp: <Fri 2024-04-26 17:16 svarrette>
 #
-# Copyright (c) 2015 Sebastien Varrette <Sebastien.Varrette@uni.lu>
+# Copyright (c) 2015-2024 S. Varrette
 #
 # Available Commands
 # ------------------
@@ -11,27 +11,55 @@
 # make clean     : Remove backup files (*~) and other generated files
 #
 ############################## Variables Declarations ############################
+SHELL = /bin/bash
 
-SRCDIR = $(dir $(wildcard */))
-TARGET = $(join $(SRCDIR), $(SRCDIR:/=.pdf))
+DIRS = $(sort $(dir $(wildcard */)))
+SRC  = $(join $(DIRS), $(DIRS:/=.tex))
+PDF  = $(SRC:.tex=.pdf)
+RELEASED_PDF  = $(notdir $(SRC:.tex=.pdf))
+COVERS = $(addprefix cover_,$(RELEASED_PDF:.pdf=.png))
 
-all:
+# pdftoppm to help producing cover images
+PDFTOPPM = $(shell which pdftoppm)
+# Ghostscript for the help of producing optimized PDF
+GS      = $(shell which gs)
+GS_OPTS = -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress
 
-release: all
-	@for f in $(TARGET); do \
-		echo "==> releasing '$$f' in the current directory"; \
-		rsync -avzu $$f .; \
-	done
+TARGETS = $(DIRS)
+# $(RELEASED_PDF)
 
-release_clean: clean
-	rm -i $(notdir $(TARGET))
+###################### Let's go!!!! ######################
+all: $(TARGETS)
 
-test:
-	@echo "SRCDIR = $(SRCDIR)"
-	@echo "TARGET = $(TARGET)"
+# cover: $(COVERS)
+# pdf: $(RELEASED_PDF)
 
-%:
-	@for d in $(SRCDIR); do \
-		echo "==> running 'make $@' in $$d"; \
+info:
+	@echo "DIRS  = $(DIRS)"
+	@echo "SRC   = $(SRC)"
+	@echo "PDF   = $(PDF)"
+	@echo "RELEASED_PDF = $(RELEASED_PDF)"
+	@echo "COVERS   = $(COVERS)"
+	@echo "TARGETS = $(TARGETS)"
+
+.PHONY: minimal advanced markdown
+minimal advanced markdown:
+	@echo "=> force compilation to generate '$@/$@.pdf'"
+	$(MAKE) -C $@ clean
+	$(MAKE) -C $@
+	@echo "=> produce optimized PDF $@ using ghostcript"
+	gs $(GS_OPTS) -sOutputFile=$@.pdf   $@/$@.pdf
+	@echo "=> generating cover image (first page, converted to png using pdftoppm) for $@.pdf"
+	pdftoppm -png -r 300 -f 1 -l 1 $@.pdf $@
+	@echo "=> renaming cover file"
+	mv $@-*.png cover_$@.png
+
+
+clean:
+	@for d in $(DIRS); do \
+		echo "==> processing '$$d'"; \
 		$(MAKE) -C $$d $@; \
 	done
+
+distclean: clean
+	rm -f $(RELEASED_PDF) $(COVERS)
