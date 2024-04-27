@@ -306,7 +306,7 @@ follow up text...
 
 * Institute/[...]\newline
   Office
-* _Contact_: `prenom.nom@ssi.gouv.fr`
+* _Contact_: `firstname.name@domain.com`
 
 ::::
 
